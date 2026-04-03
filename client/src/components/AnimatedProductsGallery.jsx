@@ -17,12 +17,17 @@ const AnimatedProductsGallery = () => {
       { id: 4, name: 'Premium Classic Shirt', price: '4799', image: '/src/assets/products/fashion/1.png', label: 'NEW', category: 'fashion' },
       { id: 5, name: 'Signature Navy T-Shirt', price: '14399', image: '/src/assets/products/fashion/2.png', label: 'SALE', category: 'fashion' },
       { id: 6, name: 'Modern Fit T-Shirt', price: '10399', image: '/src/assets/products/fashion/3.png', label: 'HOT', category: 'fashion' },
-      { id: 41, name: 'Midnight Essential', price: '5299', image: '/src/assets/products/fashion/1.png', label: 'NEW', category: 'fashion' },
+      { id: 41, name: 'Midnight Essential', price: '5299', image: '/src/assets/products/fashion/4.png', label: 'NEW', category: 'fashion' },
+      { id: 42, name: 'Arctic White Tee', price: '3499', image: '/src/assets/products/fashion/5.png', label: 'FRESH', category: 'fashion' },
+      { id: 43, name: 'Street Style Tee', price: '4999', image: '/src/assets/products/fashion/6.png', label: 'TRENDING', category: 'fashion' },
+      { id: 44, name: 'Urban Graphic Shirt', price: '5799', image: '/src/assets/products/fashion/7.png', label: 'BOLD', category: 'fashion' },
+      { id: 45, name: 'Bold Print Tee', price: '4299', image: '/src/assets/products/fashion/8.png', label: 'NEW', category: 'fashion' },
     ],
     jewelry: [
-      { id: 7, name: 'Diamond Studs', price: '24999', image: '/src/assets/products/jewelry/1.png', label: 'ELEGANT', category: 'jewelry' },
-      { id: 8, name: 'Gold Hoops', price: '18999', image: '/src/assets/products/jewelry/2.png', label: 'CLASSIC', category: 'jewelry' },
-      { id: 71, name: 'Silver Drops', price: '12999', image: '/src/assets/products/jewelry/1.png', label: 'CHIC', category: 'jewelry' },
+      { id: 7, name: 'Diamond Pendant', price: '24999', image: '/src/assets/products/jewelry/1.png', label: 'ELEGANT', category: 'jewelry' },
+      { id: 8, name: 'Gold Pendant', price: '18999', image: '/src/assets/products/jewelry/2.png', label: 'CLASSIC', category: 'jewelry' },
+      { id: 71, name: 'Silver Pendant', price: '12999', image: '/src/assets/products/jewelry/3.png', label: 'CHIC', category: 'jewelry' },
+      { id: 73, name: 'Crystal Pendant', price: '16999', image: '/src/assets/products/jewelry/4.png', label: 'NEW', category: 'jewelry' },
     ],
     beauty: [
       { id: 101, name: 'Ruby Rush', price: '2499', image: '/src/assets/products/beauty/1.png', label: 'MATTE', category: 'beauty', color: { r: 180, g: 0, b: 0 } },
@@ -90,7 +95,7 @@ const AnimatedProductsGallery = () => {
         transition={{ delay: 0.2, duration: 0.6 }}
         viewport={{ once: false }}
       >
-        {['all', 'eyewear', 'fashion', 'furniture'].map((cat) => (
+        {['all', 'eyewear', 'fashion', 'jewelry', 'beauty', 'furniture'].map((cat) => (
           <motion.button
             key={cat}
             className={`filter-btn ${selectedCategory === cat ? 'active' : ''}`}

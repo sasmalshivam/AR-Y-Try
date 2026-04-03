@@ -4,9 +4,9 @@ import Navbar from '../components/Navbar';
 
 // ─── ARYAĀ DESIGN TOKENS ─────────────────────────────────
 const T = {
-  ink: '#0a0a0f',
-  inkLight: '#111827',
-  inkMid: '#1a2035',
+  ink: '#1e2132',
+  inkLight: '#252840',
+  inkMid: '#2a2d42',
   gold: '#c9a84c',
   goldLight: '#e8d5a3',
   goldPale: 'rgba(201,168,76,0.08)',
@@ -153,22 +153,27 @@ function ThreeCanvas({ state }) {
     camera.position.set(0, 1.5, 11);
     camera.lookAt(0, 1, 0);
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
     renderer.setSize(W, H);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFShadowMap;
     mountRef.current.appendChild(renderer.domElement);
 
-    scene.add(new THREE.AmbientLight(0xffffff, 0.5));
-    const key = new THREE.DirectionalLight(0xfff4e0, 1.4);
+    // Set scene background to match the moderate CSS background
+    scene.background = new THREE.Color(0x1e2132);
+
+    scene.add(new THREE.AmbientLight(0xffffff, 1.2));
+    const key = new THREE.DirectionalLight(0xfff4e0, 2.0);
     key.position.set(-4, 10, 6); key.castShadow = true;
     key.shadow.mapSize.set(1024, 1024);
     scene.add(key);
-    const fill = new THREE.DirectionalLight(0xe0e8ff, 0.4);
+    const fill = new THREE.DirectionalLight(0xe0e8ff, 0.8);
     fill.position.set(6, 4, -4); scene.add(fill);
-    const rim = new THREE.DirectionalLight(0xc9a84c, 0.3);
+    const rim = new THREE.DirectionalLight(0xc9a84c, 0.5);
     rim.position.set(0, 8, -8); scene.add(rim);
+    const front = new THREE.DirectionalLight(0xffffff, 0.6);
+    front.position.set(0, 5, 10); scene.add(front);
 
     const ground = new THREE.Mesh(
       new THREE.PlaneGeometry(30, 30),
@@ -608,10 +613,10 @@ const INJECT_CSS = `
     --gl:rgba(255,255,255,0.04); --glB:rgba(255,255,255,0.09);
     --glBH:rgba(255,255,255,0.17);
   }
-  .ac-wrap { font-family:'DM Sans',sans-serif; background:var(--ink); color:var(--cream); height:100vh; display:flex; overflow:hidden; padding-top: 80px; position: relative; }
-  .ac-canvas { flex:1; position:relative; background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(132, 148, 255, 0.1) 0%,transparent 70%),var(--ink); border-right: 1px solid var(--glB); }
-  .ac-canvas-hint { position:absolute; bottom:24px; left:50%; transform:translateX(-50%); font-family:'Space Mono',monospace; font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--creamD); white-space:nowrap; border:1px solid var(--glB); padding:8px 18px; backdrop-filter:blur(8px); background:rgba(7, 7, 20, 0.5); cursor: none;}
-  .ac-panel { width:420px; display:flex; flex-direction:column; background:rgba(7, 7, 20, 0.97); z-index:10; }
+  .ac-wrap { font-family:'DM Sans',sans-serif; background:#1e2132; color:var(--cream); height:100vh; display:flex; overflow:hidden; padding-top: 80px; position: relative; }
+  .ac-canvas { flex:1; position:relative; background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(201,168,76,0.07) 0%,transparent 70%), #1e2132; border-right: 1px solid var(--glB); overflow:hidden; }
+  .ac-canvas-hint { position:absolute; bottom:24px; left:50%; transform:translateX(-50%); font-family:'Space Mono',monospace; font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--creamD); white-space:nowrap; border:1px solid var(--glB); padding:8px 18px; backdrop-filter:blur(8px); background:rgba(30,33,50,0.6); cursor: none;}
+  .ac-panel { width:420px; display:flex; flex-direction:column; background:rgba(20,22,38,0.98); z-index:10; }
   .ac-header { padding:28px 28px 22px; border-bottom:1px solid var(--glB); flex-shrink:0; }
   .ac-logo { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:300; letter-spacing:8px; color:var(--cream); margin-bottom:6px; }
   .ac-logo span { color:var(--gold); }

@@ -127,35 +127,44 @@ def render_eyewear(img, landmarks, item_path):
     glasses = cv2.imread(item_path, cv2.IMREAD_UNCHANGED)
     if glasses is None: return img
     
-    # If it's a 3-channel image (JPG or no alpha), remove white background
+    # If it's a 3-channel image (JPG or no alpha), remove white/light background
     if glasses.shape[2] == 3:
         tmp = cv2.cvtColor(glasses, cv2.COLOR_BGR2BGRA)
         gray = cv2.cvtColor(glasses, cv2.COLOR_BGR2GRAY)
-        _, alpha = cv2.threshold(gray, 240, 255, cv2.THRESH_BINARY_INV)
+        _, alpha = cv2.threshold(gray, 230, 255, cv2.THRESH_BINARY_INV)
         tmp[:, :, 3] = alpha
         glasses = tmp
     
-    # 33: Left Eye Outer, 263: Right Eye Outer, 168: Nose Bridge
+    # Use eye outer corners for positioning (33=left, 263=right)
     pL = landmarks[33]
     pR = landmarks[263]
-    pCenter = landmarks[168]
     
     xL, yL = int(pL.x * w), int(pL.y * h)
     xR, yR = int(pR.x * w), int(pR.y * h)
-    xC, yC = int(pCenter.x * w), int(pCenter.y * h)
     
-    eye_width = np.hypot(xR - xL, yR - yL)
-    glasses_width = int(eye_width * 2.2)
+    # Eye midpoint — glasses anchor to eye level
+    xMid = (xL + xR) // 2
+    yMid = (yL + yR) // 2
+    
+    # Size glasses based on eye span
+    eye_span = np.hypot(xR - xL, yR - yL)
+    glasses_width = int(eye_span * 2.5)
     aspect = glasses.shape[0] / glasses.shape[1]
     glasses_height = int(glasses_width * aspect)
     
     glasses = cv2.resize(glasses, (glasses_width, glasses_height))
     
+    # Rotate to match head tilt
     angle = np.degrees(np.arctan2(yR - yL, xR - xL))
     M = cv2.getRotationMatrix2D((glasses_width // 2, glasses_height // 2), angle, 1.0)
-    glasses = cv2.warpAffine(glasses, M, (glasses_width, glasses_height), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=(0,0,0,0))
+    glasses = cv2.warpAffine(glasses, M, (glasses_width, glasses_height),
+                              flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=(0,0,0,0))
     
-    return overlayPNG(img, glasses, xC - glasses_width // 2, yC - glasses_height // 2)
+    # Place glasses centered on eye midpoint
+    x = xMid - glasses_width // 2
+    y = yMid - glasses_height // 2
+    
+    return overlayPNG(img, glasses, x, y)
 
 def render_earrings(img, landmarks, item_path):
     h, w, _ = img.shape
@@ -183,6 +192,41 @@ def render_earrings(img, landmarks, item_path):
         img = overlayPNG(img, resized, ex - ear_size // 2, ey)
         
     return img
+
+def render_pendant(img, landmarks, item_path):
+    h, w, _ = img.shape
+    pendant = cv2.imread(item_path, cv2.IMREAD_UNCHANGED)
+    if pendant is None: return img
+
+    # Remove white/light background if no alpha channel
+    if pendant.shape[2] == 3:
+        tmp = cv2.cvtColor(pendant, cv2.COLOR_BGR2BGRA)
+        gray = cv2.cvtColor(pendant, cv2.COLOR_BGR2GRAY)
+        _, alpha = cv2.threshold(gray, 230, 255, cv2.THRESH_BINARY_INV)
+        tmp[:, :, 3] = alpha
+        pendant = tmp
+
+    # Landmark 152 = chin bottom, 10 = forehead top (for face height ref)
+    # Use 33 & 263 (eye corners) for face width reference
+    chin = landmarks[152]
+    eyeL = landmarks[33]
+    eyeR = landmarks[263]
+
+    chin_x = int(chin.x * w)
+    chin_y = int(chin.y * h)
+
+    face_width = abs(int(eyeR.x * w) - int(eyeL.x * w))
+    pendant_w = int(face_width * 1.2)  # pendant slightly narrower than face
+    aspect = pendant.shape[0] / pendant.shape[1]
+    pendant_h = int(pendant_w * aspect)
+
+    pendant = cv2.resize(pendant, (pendant_w, pendant_h))
+
+    # Place pendant centered below chin
+    x = chin_x - pendant_w // 2
+    y = chin_y + int(face_width * 0.1)  # small offset below chin
+
+    return overlayPNG(img, pendant, x, y)
 
 def render_lipstick(img, landmarks, color):
     # Lip outer indices
@@ -298,7 +342,7 @@ def generate_frames():
 
         # 2. RUN FACE DETECTION IF NEEDED
         if current_category != "fashion":
-            face_result = face_detector.detect_for_video(mp_image, timestamp_ms)
+            face_result = face_detector.detect_for_video(mp_image, timestamp_ms + 1)
             if face_result.face_landmarks:
                 f_landmarks = face_result.face_landmarks[0]
                 if current_category == "eyewear":
@@ -310,7 +354,7 @@ def generate_frames():
                     items = inventory.get("jewelry", [])
                     if items:
                         item_path = os.path.join(asset_folders["jewelry"], items[current_item_index % len(items)])
-                        img = render_earrings(img, f_landmarks, item_path)
+                        img = render_pendant(img, f_landmarks, item_path)
                 elif current_category == "beauty":
                     img = render_lipstick(img, f_landmarks, lipstick_color)
 
