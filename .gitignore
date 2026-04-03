@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Production
+client/dist/
+
+# Env files
+.env
+server/.env
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Vite
+.vite/
