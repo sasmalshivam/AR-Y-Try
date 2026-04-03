@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FilesetResolver, PoseLandmarker } from '@mediapipe/tasks-vision';
 
-const ARCamera = ({ currentProduct }) => {
+const ARCamera = ({ currentProduct, proMode }) => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [active, setActive] = useState(false);
@@ -19,6 +19,8 @@ const ARCamera = ({ currentProduct }) => {
     let stream;
 
     const startCamera = async () => {
+      if (proMode) return; // Don't capture camera in browser if Pro Mode is active
+      
       try {
         stream = await navigator.mediaDevices.getUserMedia({ video: { width: { ideal: 1280 }, height: { ideal: 720 } }, audio: false });
         if (!videoRef.current) return;
@@ -38,7 +40,7 @@ const ARCamera = ({ currentProduct }) => {
         stream.getTracks().forEach(track => track.stop());
       }
     };
-  }, []);
+  }, [proMode]);
 
   useEffect(() => {
     if (!active || !videoRef.current) return;
@@ -80,8 +82,8 @@ const ARCamera = ({ currentProduct }) => {
         const nowInMs = performance.now();
         const result = poseLandmarker.detectForVideo(videoRef.current, nowInMs);
 
-        if (result.poseLandmarks && result.poseLandmarks.length > 0) {
-          setLandmarks(result.poseLandmarks[0]);
+        if (result.pose_landmarks && result.pose_landmarks.length > 0) {
+          setLandmarks(result.pose_landmarks[0]);
         }
       } catch (err) {
         console.warn('Pose detection tick error', err);
@@ -155,19 +157,40 @@ const ARCamera = ({ currentProduct }) => {
 
   return (
     <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: '#000' }}>
-      <video
-        ref={videoRef}
-        style={{ width: '100%', height: '100%', objectFit: 'cover', transform: 'scaleX(-1)' }}
-        muted
-        playsInline
-      />
-      <canvas
-        ref={canvasRef}
-        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}
-      />
-      {(!active || !modelReady) && (
+      {proMode ? (
+        <img 
+          src="http://127.0.0.1:5001/video" 
+          alt="Pro AR Stream"
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          onError={(e) => {
+            e.target.style.display = 'none';
+            alert("Error: Ensure the Python AR server is running at http://127.0.0.1:5001/video");
+          }}
+        />
+      ) : (
+        <>
+          <video
+            ref={videoRef}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', transform: 'scaleX(-1)' }}
+            muted
+            playsInline
+          />
+          <canvas
+            ref={canvasRef}
+            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}
+          />
+        </>
+      )}
+      
+      {(!active || !modelReady) && !proMode && (
         <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold', backgroundColor: 'rgba(0,0,0,0.35)' }}>
           {active ? 'Loading AR model...' : 'Initializing camera...'}
+        </div>
+      )}
+
+      {proMode && (
+        <div style={{ position: 'absolute', top: '80px', right: '20px', background: 'rgba(201,168,76,0.9)', color: 'black', padding: '4px 10px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '1px' }}>
+          PRO SERVER ACTIVE
         </div>
       )}
     </div>

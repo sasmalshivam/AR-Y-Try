@@ -8,18 +8,32 @@ const AnimatedProductsGallery = () => {
 
   const products = {
     eyewear: [
-      { id: 1, name: 'Classic Sunglasses', price: '149.99', image: '/src/assets/products/eyewear/product-1.jpg', label: 'NEW' },
-      { id: 2, name: 'Blue Light Glasses', price: '89.99', image: '/src/assets/products/eyewear/product-2.jpg', label: 'TRENDING' },
-      { id: 3, name: 'Aviator Pro', price: '199.99', image: '/src/assets/products/eyewear/product-3.jpg', label: 'POPULAR' },
+      { id: 1, name: 'Aviator Stealth', price: '11999', image: '/src/assets/products/eyewear/1.png', label: 'PREMIUM', category: 'eyewear' },
+      { id: 2, name: 'Urban Wayfarer', price: '7199', image: '/src/assets/products/eyewear/2.png', label: 'TRENDING', category: 'eyewear' },
+      { id: 3, name: 'Gold Rim Lux', price: '15999', image: '/src/assets/products/eyewear/3.png', label: 'LUXURY', category: 'eyewear' },
+      { id: 31, name: 'Cyber Shield', price: '18999', image: '/src/assets/products/eyewear/1.png', label: 'NEW', category: 'eyewear' },
     ],
     fashion: [
-      { id: 4, name: 'Premium T-Shirt', price: '59.99', image: '/src/assets/products/fashion/product-1.jpg', label: 'NEW' },
-      { id: 5, name: 'Casual Jacket', price: '179.99', image: '/src/assets/products/fashion/product-2.jpg', label: 'SALE' },
-      { id: 6, name: 'Summer Dress', price: '129.99', image: '/src/assets/products/fashion/product-3.jpg', label: 'HOT' },
+      { id: 4, name: 'Premium Classic Shirt', price: '4799', image: '/src/assets/products/fashion/1.png', label: 'NEW', category: 'fashion' },
+      { id: 5, name: 'Signature Navy T-Shirt', price: '14399', image: '/src/assets/products/fashion/2.png', label: 'SALE', category: 'fashion' },
+      { id: 6, name: 'Modern Fit T-Shirt', price: '10399', image: '/src/assets/products/fashion/3.png', label: 'HOT', category: 'fashion' },
+      { id: 41, name: 'Midnight Essential', price: '5299', image: '/src/assets/products/fashion/1.png', label: 'NEW', category: 'fashion' },
+    ],
+    jewelry: [
+      { id: 7, name: 'Diamond Studs', price: '24999', image: '/src/assets/products/jewelry/1.png', label: 'ELEGANT', category: 'jewelry' },
+      { id: 8, name: 'Gold Hoops', price: '18999', image: '/src/assets/products/jewelry/2.png', label: 'CLASSIC', category: 'jewelry' },
+      { id: 71, name: 'Silver Drops', price: '12999', image: '/src/assets/products/jewelry/1.png', label: 'CHIC', category: 'jewelry' },
+    ],
+    beauty: [
+      { id: 101, name: 'Ruby Rush', price: '2499', image: '/src/assets/products/beauty/1.png', label: 'MATTE', category: 'beauty', color: { r: 180, g: 0, b: 0 } },
+      { id: 102, name: 'Mauve Mist', price: '2499', image: '/src/assets/products/beauty/2.png', label: 'SATIN', category: 'beauty', color: { r: 150, g: 70, b: 120 } },
+      { id: 103, name: 'Nude Silk', price: '2499', image: '/src/assets/products/beauty/1.png', label: 'GLOSS', category: 'beauty', color: { r: 188, g: 130, b: 110 } },
+      { id: 104, name: 'Deep Plum', price: '2499', image: '/src/assets/products/beauty/1.png', label: 'VELVET', category: 'beauty', color: { r: 80, g: 0, b: 50 } },
+      { id: 105, name: 'Sunset Coral', price: '2499', image: '/src/assets/products/beauty/1.png', label: 'BRIGHT', category: 'beauty', color: { r: 255, g: 80, b: 60 } },
     ],
     furniture: [
-      { id: 7, name: 'Modern Sofa', price: '799.99', image: '/src/assets/products/furniture/product-1.jpg', label: 'NEW' },
-      { id: 8, name: 'Lounge Chair', price: '399.99', image: '/src/assets/products/furniture/product-2.jpg', label: 'POPULAR' },
+      { id: 11, name: 'Modern Sofa', price: '63999', image: '/src/assets/products/furniture/product-1.jpg', label: 'NEW', category: 'furniture' },
+      { id: 12, name: 'Lounge Chair', price: '31999', image: '/src/assets/products/furniture/product-2.jpg', label: 'POPULAR', category: 'furniture' },
     ],
   };
 

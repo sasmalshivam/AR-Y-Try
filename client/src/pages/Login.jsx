@@ -38,13 +38,13 @@ const Login = () => {
         
         <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', padding: '60px 40px', backdropFilter: 'blur(10px)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           
-          <div style={{ fontFamily: '"Space Mono", monospace', fontSize: '10px', letterSpacing: '4px', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{ width: '20px', height: '1px', background: 'var(--gold)' }} />
+          <div style={{ fontFamily: '"Space Mono", monospace', fontSize: '10px', letterSpacing: '4px', textTransform: 'uppercase', color: '#5C4033', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{ width: '20px', height: '1px', background: '#5C4033' }} />
             Access Portal
-            <div style={{ width: '20px', height: '1px', background: 'var(--gold)' }} />
+            <div style={{ width: '20px', height: '1px', background: '#5C4033' }} />
           </div>
           
-          <h1 style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: '48px', color: 'var(--cream)', fontWeight: 300, margin: '0 0 40px 0', lineHeight: 1 }}>
+          <h1 style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: '48px', color: '#5C4033', fontWeight: 300, margin: '0 0 40px 0', lineHeight: 1 }}>
             Sign In
           </h1>
 

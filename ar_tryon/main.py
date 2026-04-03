@@ -1,20 +1,31 @@
 import cv2
 import os
 import mediapipe as mp
+from mediapipe.tasks import python
+from mediapipe.tasks.python import vision
 import numpy as np
+import time
 
 # Webcam
 cap = cv2.VideoCapture(0)
 cap.set(3, 1280)
 cap.set(4, 720)
 
-# MediaPipe Pose
-mp_pose = mp.solutions.pose
-pose = mp_pose.Pose(min_detection_confidence=0.6, min_tracking_confidence=0.6)
+# MediaPipe Tasks Initialization
+model_path = os.path.join(os.path.dirname(__file__), 'pose_landmarker_lite.task')
+base_options = python.BaseOptions(model_asset_path=model_path)
+options = vision.PoseLandmarkerOptions(
+    base_options=base_options,
+    running_mode=vision.RunningMode.VIDEO,
+    min_pose_detection_confidence=0.5,
+    min_pose_presence_confidence=0.5,
+    min_tracking_confidence=0.5
+)
+detector = vision.PoseLandmarker.create_from_options(options)
 
 # Load shirts
-shirtFolder = "Shirts"
-shirts = os.listdir(shirtFolder)
+shirtFolder = os.path.join(os.path.dirname(__file__), "Shirts")
+shirts = sorted(os.listdir(shirtFolder))
 imageNumber = 0
 
 # Gesture control
@@ -29,51 +40,34 @@ prevX, prevY = 0, 0
 # 🔥 Fast overlay
 def overlayPNG(img, overlay, x, y):
     h, w = overlay.shape[:2]
+    img_h, img_w = img.shape[:2]
 
-    if x >= img.shape[1] or y >= img.shape[0]:
+    if x >= img_w or y >= img_h or x + w <= 0 or y + h <= 0:
         return img
 
-    h = min(h, img.shape[0] - y)
-    w = min(w, img.shape[1] - x)
+    x1 = max(0, x)
+    y1 = max(0, y)
+    x2 = min(img_w, x + w)
+    y2 = min(img_h, y + h)
 
-    if h <= 0 or w <= 0:
+    overlay_x1 = x1 - x
+    overlay_y1 = y1 - y
+    overlay_x2 = overlay_x1 + (x2 - x1)
+    overlay_y2 = overlay_y1 + (y2 - y1)
+
+    overlay_crop = overlay[overlay_y1:overlay_y2, overlay_x1:overlay_x2]
+
+    if overlay_crop.shape[0] == 0 or overlay_crop.shape[1] == 0:
         return img
 
-    overlay = overlay[:h, :w]
-
-    alpha = overlay[:, :, 3] / 255.0
+    alpha = overlay_crop[:, :, 3] / 255.0
     for c in range(3):
-        img[y:y+h, x:x+w, c] = (
-            alpha * overlay[:, :, c] +
-            (1 - alpha) * img[y:y+h, x:x+w, c]
+        img[y1:y2, x1:x2, c] = (
+            alpha * overlay_crop[:, :, c] +
+            (1 - alpha) * img[y1:y2, x1:x2, c]
         )
 
     return img
-
-# 🔥 Improved occlusion (NO HOLES)
-def applyOcclusion(shirt, x, y, wristPoints):
-    h, w = shirt.shape[:2]
-    result = shirt.copy()
-
-    mask = np.zeros((h, w), dtype=np.uint8)
-
-    for (wx, wy) in wristPoints:
-        relX = wx - x
-        relY = wy - y
-
-        if 0 <= relX < w and 0 <= relY < h:
-            cv2.circle(mask, (relX, relY), 25, 255, -1)
-
-    # Smooth edges
-    mask = cv2.GaussianBlur(mask, (21, 21), 0)
-
-    # Apply to alpha channel
-    alpha = result[:, :, 3]
-    alpha = cv2.subtract(alpha, mask)
-
-    result[:, :, 3] = alpha
-
-    return result
 
 while True:
     success, img = cap.read()
@@ -83,23 +77,30 @@ while True:
     img = cv2.flip(img, 1)
     h, w, _ = img.shape
 
-    imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    results = pose.process(imgRGB)
+    # Convert to MediaPipe Image
+    mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+    
+    # Precise timestamp for VIDEO mode
+    timestamp_ms = int(time.time() * 1000)
+    
+    # Detect landmarks
+    result = detector.detect_for_video(mp_image, timestamp_ms)
 
-    if results.pose_landmarks:
-
-        lm = results.pose_landmarks.landmark
+    if result.pose_landmarks:
+        # Get first person detected
+        landmarks = result.pose_landmarks[0]
 
         def getPoint(id):
-            return int(lm[id].x * w), int(lm[id].y * h)
+            lm = landmarks[id]
+            return int(lm.x * w), int(lm.y * h)
 
         try:
-            p11 = getPoint(11)
-            p12 = getPoint(12)
-            p23 = getPoint(23)
-            p24 = getPoint(24)
-            p15 = getPoint(15)
-            p16 = getPoint(16)
+            p11 = getPoint(11) # Left Shoulder
+            p12 = getPoint(12) # Right Shoulder
+            p23 = getPoint(23) # Left Hip
+            p24 = getPoint(24) # Right Hip
+            p15 = getPoint(15) # Left Wrist
+            p16 = getPoint(16) # Right Wrist
         except:
             continue
 
@@ -111,10 +112,9 @@ while True:
         if bodyWidth < 80:
             continue
 
-        torsoHeight = abs(p11[1] - p23[1])
-
         # -------- LOAD SHIRT --------
-        shirtPath = os.path.join(shirtFolder, shirts[imageNumber])
+        shirt_idx = imageNumber % len(shirts)
+        shirtPath = os.path.join(shirtFolder, shirts[shirt_idx])
         shirt = cv2.imread(shirtPath, cv2.IMREAD_UNCHANGED)
 
         if shirt is None or shirt.shape[2] != 4:
@@ -139,16 +139,11 @@ while True:
         y = int(prevY * 0.7 + y * 0.3)
         prevX, prevY = x, y
 
-        # -------- OCCLUSION --------
-        wristPoints = [p15, p16]
-        shirt = applyOcclusion(shirt, x, y, wristPoints)
-
         # -------- OVERLAY --------
         img = overlayPNG(img, shirt, x, y)
 
         # -------- GESTURE CONTROL --------
         if cooldown == 0:
-
             if p16[1] < p12[1] + 60:
                 counterRight += 1
                 if counterRight > selectionSpeed:
@@ -170,13 +165,14 @@ while True:
             cooldown -= 1
 
         # -------- UI --------
-        cv2.putText(img, f"Shirt: {imageNumber}", (50, 50),
+        cv2.putText(img, f"Shirt Index: {imageNumber % len(shirts)}", (50, 50),
                     cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 2)
 
-    cv2.imshow("Virtual Try-On PRO", img)
+    cv2.imshow("AR Try-On PRO", img)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
 cap.release()
 cv2.destroyAllWindows()
+detector.close()

@@ -6,6 +6,7 @@ import { Trash2, ShoppingBag, ArrowLeft, ArrowRight } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Button from '../components/ui/Button';
+import { formatPrice } from '../utils/currency';
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -90,7 +91,7 @@ const Cart = () => {
                       </h3>
                     </Link>
                     <div style={{ fontSize: '18px', color: 'var(--cream)', fontWeight: 300, fontFamily: '"Space Mono", monospace', marginTop: 'auto' }}>
-                      ${item.price.toFixed(2)}
+                      {formatPrice(item.price)}
                     </div>
                   </div>
                   
@@ -119,7 +120,7 @@ const Cart = () => {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '32px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: '"Space Mono", monospace', fontSize: '12px', color: 'rgba(255,255,255,0.6)' }}>
                     <span>Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)} items)</span>
-                    <span style={{ color: 'var(--cream)' }}>${cartSubtotal.toFixed(2)}</span>
+                    <span style={{ color: 'var(--cream)' }}>{formatPrice(cartSubtotal)}</span>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: '"Space Mono", monospace', fontSize: '12px', color: 'rgba(255,255,255,0.6)' }}>
                     <span>Shipping</span>
@@ -131,7 +132,7 @@ const Cart = () => {
                 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '40px' }}>
                   <span style={{ fontFamily: '"Space Mono", monospace', fontSize: '10px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '2px' }}>Estimated Total</span>
-                  <span style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: '42px', color: 'var(--cream)', lineHeight: 1 }}>${cartSubtotal.toFixed(2)}</span>
+                  <span style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: '42px', color: 'var(--cream)', lineHeight: 1 }}>{formatPrice(cartSubtotal)}</span>
                 </div>
                 
                 <Button style={{ width: '100%', padding: '20px', fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', justifyContent: 'center' }}>

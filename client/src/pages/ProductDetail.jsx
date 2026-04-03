@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductDetails } from '../store/slices/productSlice';
 import { addToCart } from '../store/slices/cartSlice';
@@ -7,9 +7,11 @@ import { motion } from 'framer-motion';
 import { RevealFromLeft, RevealFromRight } from '../components/ScrollAnimations';
 import Button from '../components/ui/Button';
 import { ArrowLeft, Box, ShoppingCart } from 'lucide-react';
+import { formatPrice } from '../utils/currency';
 
 const ProductDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [qty, setQty] = useState(1);
   const { productDetails: product, loading, error } = useSelector((state) => state.products);
@@ -21,7 +23,7 @@ const ProductDetail = () => {
   const mockProduct = product || {
     _id: id,
     name: 'Cyberpunk Goggles',
-    price: 120,
+    price: 9600,
     category: 'eyewear',
     arEnabled: true,
     description: 'Immersive augmented reality goggles equipped with visual distortion tech to seamlessly blend digital overlay logic onto your physical aesthetic.',
@@ -71,7 +73,7 @@ const ProductDetail = () => {
               )}
 
               <div style={{ position: 'absolute', bottom: '2rem', left: '0', right: '0', display: 'flex', justifyContent: 'center' }}>
-                {mockProduct.arEnabled && (
+                {(mockProduct.arEnabled || mockProduct.category === 'fashion' || mockProduct.category === 'eyewear') && (
                   <motion.div
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
@@ -80,6 +82,7 @@ const ProductDetail = () => {
                   >
                     <Button
                       variant="primary"
+                      onClick={() => navigate('/try-on', { state: { productId: mockProduct._id || mockProduct.id } })}
                       style={{ padding: '1rem 3rem', borderRadius: '30px', gap: '0.5rem', boxShadow: '0 10px 30px rgba(124, 58, 237, 0.4)', cursor: 'pointer' }}
                       onMouseEnter={(e) => e.currentTarget.style.filter = 'brightness(1.05)'}
                       onMouseLeave={(e) => e.currentTarget.style.filter = 'none'}
@@ -101,7 +104,7 @@ const ProductDetail = () => {
             
             <h1 style={{ fontSize: '3.5rem', marginBottom: '1rem', lineHeight: 1.1 }}>{mockProduct.name}</h1>
             <p className="text-gradient" style={{ fontSize: '2.5rem', fontWeight: 700, marginBottom: '2rem' }}>
-              ${mockProduct.price?.toFixed(2)}
+              {formatPrice(mockProduct.price)}
             </p>
             
             <div style={{ marginBottom: '3rem' }}>
