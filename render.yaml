@@ -20,7 +20,7 @@ services:
           property: url
 
   # Vite Frontend Static Site
-  - type: static
+  - type: web
     name: ar-ecommerce-web
     env: static
     rootDir: client
