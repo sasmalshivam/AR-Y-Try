@@ -1,5 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import API_URL from '../config/api';
 
 // Configure Axios globally for HTTP-Only Cookie tunneling
 axios.defaults.withCredentials = true;
@@ -10,7 +9,7 @@ const userInfoFromStorage = localStorage.getItem('userInfo')
 
 export const login = createAsyncThunk('auth/login', async ({ email, password }, { rejectWithValue }) => {
   try {
-    const { data } = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+    const { data } = await axios.post(`${API_URL}/api/auth/login`, { email, password });
     localStorage.setItem('userInfo', JSON.stringify(data)); // JWT isn't here anymore!
     return data;
   } catch (err) {
@@ -20,7 +19,7 @@ export const login = createAsyncThunk('auth/login', async ({ email, password }, 
 
 export const register = createAsyncThunk('auth/register', async ({ name, email, password, role }, { rejectWithValue }) => {
   try {
-    const { data } = await axios.post('http://localhost:5000/api/auth/register', { name, email, password, role });
+    const { data } = await axios.post(`${API_URL}/api/auth/register`, { name, email, password, role });
     localStorage.setItem('userInfo', JSON.stringify(data));
     return data;
   } catch (err) {
@@ -30,7 +29,7 @@ export const register = createAsyncThunk('auth/register', async ({ name, email, 
 
 export const logout = createAsyncThunk('auth/logout', async (_, { rejectWithValue }) => {
   try {
-    await axios.post('http://localhost:5000/api/auth/logout');
+    await axios.post(`${API_URL}/api/auth/logout`);
     localStorage.removeItem('userInfo');
     return null;
   } catch (err) {

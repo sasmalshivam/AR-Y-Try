@@ -1,10 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import API_URL from '../config/api';
 
 // Thunks
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async (_, { rejectWithValue }) => {
   try {
-    const { data } = await axios.get('http://localhost:5000/api/products');
+    const { data } = await axios.get(`${API_URL}/api/products`);
     return data;
   } catch (err) {
     return rejectWithValue(err.response?.data?.message || err.message);
@@ -19,7 +20,7 @@ export const fetchProductDetails = createAsyncThunk('products/fetchProductDetail
       return null;
     }
 
-    const { data } = await axios.get(`http://localhost:5000/api/products/${id}`);
+    const { data } = await axios.get(`${API_URL}/api/products/${id}`);
     return data;
   } catch (err) {
     return rejectWithValue(err.response?.data?.message || err.message);

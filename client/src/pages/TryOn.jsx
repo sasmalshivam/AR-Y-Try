@@ -74,28 +74,7 @@ const TryOn = () => {
   const nextProduct = currentCategoryProducts[nextIndex];
   const prevProduct = currentCategoryProducts[prevIndex];
 
-  useEffect(() => {
-    if (activeProduct) {
-      const syncServer = async () => {
-        try {
-          // Set category first
-          await fetch(`http://127.0.0.1:5001/set_category/${activeCategory}`);
-          
-          // Set item or lipstick
-          if (activeCategory === 'beauty' && activeProduct?.color) {
-            const { r, g, b } = activeProduct.color;
-            await fetch(`http://127.0.0.1:5001/set_lipstick?r=${r}&g=${g}&b=${b}`);
-          } else {
-            await fetch(`http://127.0.0.1:5001/set_item/${currentProductIndex}`);
-          }
-        } catch (err) {
-          console.error("Flask sync error:", err);
-        }
-      };
-      
-      syncServer();
-    }
-  }, [activeCategory, currentProductIndex, activeProduct]);
+  // Removed server-side sync for AR as it is now handled client-side in ARCamera.jsx
 
   const handleCategoryChange = (catId) => {
     setActiveCategory(catId);

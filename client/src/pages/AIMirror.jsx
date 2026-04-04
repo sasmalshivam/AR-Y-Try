@@ -8,8 +8,9 @@ import {
   User, Crop, Scissors, Eye, Printer, ShieldCheck,
   ChevronRight, Ruler, Target
 } from 'lucide-react';
+import API_URL from '../config/api';
 
-const API_BASE = "http://localhost:5000/api/ai";
+const API_BASE = `${API_URL}/api/ai`;
 
 const extractHex = (str) => {
   const match = str.match(/#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})/);
