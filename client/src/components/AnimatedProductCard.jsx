@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Camera } from 'lucide-react';
 import { formatPrice } from '../utils/currency';
@@ -46,7 +46,7 @@ const AnimatedProductCard = ({ product, index }) => {
   };
 
   return (
-    <motion.div
+    <Motion.div
       className="animated-product-card"
       custom={index}
       initial="hidden"
@@ -55,7 +55,7 @@ const AnimatedProductCard = ({ product, index }) => {
       variants={containerVariants}
       onClick={() => navigate(`/product/${product.id}`)}
     >
-      <motion.div
+      <Motion.div
         className="product-image-wrapper"
         initial="rest"
         whileHover="hover"
@@ -70,7 +70,7 @@ const AnimatedProductCard = ({ product, index }) => {
         />
         
         {isARCompatible && (
-          <motion.div 
+          <Motion.div 
             className="product-ar-overlay"
             variants={overlayVariants}
             style={{ 
@@ -83,7 +83,7 @@ const AnimatedProductCard = ({ product, index }) => {
               backdropFilter: 'blur(2px)'
             }}
           >
-            <motion.button
+            <Motion.button
               onClick={handleTryOn}
               whileHover={{ scale: 1.1, backgroundColor: '#c9a84c' }}
               whileTap={{ scale: 0.95 }}
@@ -106,20 +106,20 @@ const AnimatedProductCard = ({ product, index }) => {
             >
               <Camera size={18} />
               Try in AR
-            </motion.button>
-          </motion.div>
+            </Motion.button>
+          </Motion.div>
         )}
 
         <div className="product-label-chip">
           {product.label}
         </div>
-      </motion.div>
+      </Motion.div>
 
       <div className="product-info-minimal">
         <h3>{product.name}</h3>
         <p className="product-price">{formatPrice(product.price)}</p>
       </div>
-    </motion.div>
+    </Motion.div>
   );
 };
 

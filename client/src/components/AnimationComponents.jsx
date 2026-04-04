@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 
 const AnimatedHeroText = ({ children, delay = 0, duration = 0.8 }) => {
   const containerVariants = {
@@ -25,37 +25,37 @@ const AnimatedHeroText = ({ children, delay = 0, duration = 0.8 }) => {
   };
 
   return (
-    <motion.div
+    <Motion.div
       initial="hidden"
       animate="visible"
       variants={containerVariants}
     >
       {React.Children.map(children, (child, index) => (
-        <motion.div key={index} variants={itemVariants}>
+        <Motion.div key={index} variants={itemVariants}>
           {child}
-        </motion.div>
+        </Motion.div>
       ))}
-    </motion.div>
+    </Motion.div>
   );
 };
 
 // Hero Enter Animation Container
 export const HeroEnter = ({ children }) => {
   return (
-    <motion.div
+    <Motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
       {children}
-    </motion.div>
+    </Motion.div>
   );
 };
 
 // Floating Animation (for decorative elements)
 export const FloatingElement = ({ children, duration = 3 }) => {
   return (
-    <motion.div
+    <Motion.div
       animate={{ y: [0, -20, 0] }}
       transition={{
         duration,
@@ -64,14 +64,14 @@ export const FloatingElement = ({ children, duration = 3 }) => {
       }}
     >
       {children}
-    </motion.div>
+    </Motion.div>
   );
 };
 
 // Scroll Indicator Animation
 export const ScrollIndicator = () => {
   return (
-    <motion.div
+    <Motion.div
       animate={{ y: [0, 10, 0] }}
       transition={{
         duration: 1.5,
@@ -92,7 +92,7 @@ export const ScrollIndicator = () => {
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <polyline points="6 9 12 15 18 9"></polyline>
       </svg>
-    </motion.div>
+    </Motion.div>
   );
 };
 
@@ -120,18 +120,18 @@ export const StaggerContainer = ({ children, delay = 0 }) => {
   };
 
   return (
-    <motion.div
+    <Motion.div
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: false, amount: 0.3 }}
     >
       {React.Children.map(children, (child, index) => (
-        <motion.div key={index} variants={itemVariants}>
+        <Motion.div key={index} variants={itemVariants}>
           {child}
-        </motion.div>
+        </Motion.div>
       ))}
-    </motion.div>
+    </Motion.div>
   );
 };
 

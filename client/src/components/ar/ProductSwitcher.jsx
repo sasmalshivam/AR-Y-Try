@@ -1,9 +1,9 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 
 const ProductSwitcher = ({ products, currentProduct, onSelectProduct }) => {
   return (
-    <motion.div
+    <Motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
@@ -24,7 +24,7 @@ const ProductSwitcher = ({ products, currentProduct, onSelectProduct }) => {
       }}
     >
       {products.map((prod, index) => (
-        <motion.button
+        <Motion.button
           key={prod._id || prod.id}
           onClick={() => onSelectProduct(prod)}
           initial={{ opacity: 0, scale: 0.9 }}
@@ -44,7 +44,7 @@ const ProductSwitcher = ({ products, currentProduct, onSelectProduct }) => {
           }}
         />
       ))}
-    </motion.div>
+    </Motion.div>
   );
 };
 

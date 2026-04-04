@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductDetails } from '../store/slices/productSlice';
 import { addToCart } from '../store/slices/cartSlice';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { RevealFromLeft, RevealFromRight } from '../components/ScrollAnimations';
 import Button from '../components/ui/Button';
 import { ArrowLeft, Box, ShoppingCart } from 'lucide-react';
@@ -58,7 +58,7 @@ const ProductDetail = () => {
           <RevealFromLeft delay={0.1}>
             <div style={{ position: 'relative', width: '100%', aspectRatio: '1/1', background: 'var(--bg-secondary)', borderRadius: '24px', overflow: 'hidden', border: '1px solid var(--border-light)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               {mockProduct.images?.[0] ? (
-                <motion.img
+                <Motion.img
                   src={mockProduct.images[0]}
                   alt={mockProduct.name}
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
@@ -74,7 +74,7 @@ const ProductDetail = () => {
 
               <div style={{ position: 'absolute', bottom: '2rem', left: '0', right: '0', display: 'flex', justifyContent: 'center' }}>
                 {(mockProduct.arEnabled || mockProduct.category === 'fashion' || mockProduct.category === 'eyewear') && (
-                  <motion.div
+                  <Motion.div
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     whileHover={{ scale: 1.05 }}
@@ -89,7 +89,7 @@ const ProductDetail = () => {
                     >
                       <Box size={24} /> Try On in AR
                     </Button>
-                  </motion.div>
+                  </Motion.div>
                 )}
               </div>
             </div>

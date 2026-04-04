@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import AnimatedProductCard from './AnimatedProductCard';
 import { FloatingElement, ScrollIndicator, StaggerContainer } from './AnimationComponents';
 import { RevealFromLeft, RevealFromRight, RevealFromBottom, StatCard, PulseElement } from './ScrollAnimations';
@@ -23,16 +23,16 @@ export default function AnimationsDemo() {
       {/* SECTION 1: Hero with Floating Elements */}
       <section style={{ padding: '80px 40px', textAlign: 'center' }}>
         <StaggerContainer delay={0.2}>
-          <motion.h1 style={{ fontSize: '48px', color: '#3E2723', margin: '0 0 16px' }}>
+          <Motion.h1 style={{ fontSize: '48px', color: '#3E2723', margin: '0 0 16px' }}>
             Animation Showcase
-          </motion.h1>
-          <motion.p style={{ fontSize: '16px', color: '#5C3317', margin: '0 0 24px' }}>
+          </Motion.h1>
+          <Motion.p style={{ fontSize: '16px', color: '#5C3317', margin: '0 0 24px' }}>
             Scroll down to see all animation effects
-          </motion.p>
+          </Motion.p>
         </StaggerContainer>
 
         <FloatingElement duration={4}>
-          <motion.div
+          <Motion.div
             style={{
               width: '80px',
               height: '80px',
@@ -64,7 +64,7 @@ export default function AnimationsDemo() {
             </RevealFromLeft>
 
             <RevealFromRight delay={0.2}>
-              <motion.div
+              <Motion.div
                 style={{
                   width: '100%',
                   height: '300px',
@@ -146,7 +146,7 @@ export default function AnimationsDemo() {
             </h2>
 
             <PulseElement>
-              <motion.button
+              <Motion.button
                 style={{
                   padding: '16px 40px',
                   fontSize: '18px',
@@ -166,7 +166,7 @@ export default function AnimationsDemo() {
                 whileTap={{ scale: 0.95 }}
               >
                 Start AR Experience
-              </motion.button>
+              </Motion.button>
             </PulseElement>
           </div>
         </RevealFromBottom>

@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, ShoppingCart, Loader, Camera, Info, Settings, Share2 } from 'lucide-react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchProducts } from '../store/slices/productSlice';
+import { useNavigate } from 'react-router-dom';
 import ARCamera from '../components/ar/ARCamera';
 import ProductSwitcher from '../components/ar/ProductSwitcher';
 import { formatPrice } from '../utils/currency';
 
 const TryOn = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   
-  const [proMode, setProMode] = useState(true); // Default to Neural AR for better experience
   const [addedToCart, setAddedToCart] = useState(false);
   const [activeCategory, setActiveCategory] = useState('fashion');
   const [currentProductIndex, setCurrentProductIndex] = useState(0);
@@ -70,25 +66,33 @@ const TryOn = () => {
   const currentCategoryProducts = productData[activeCategory] || [];
   const activeProduct = currentCategoryProducts[currentProductIndex] || currentCategoryProducts[0];
   
-  const nextIndex = (currentProductIndex + 1) % currentCategoryProducts.length;
-  const prevIndex = (currentProductIndex - 1 + currentCategoryProducts.length) % currentCategoryProducts.length;
+  const nextIndex = (currentProductIndex + 1) % (currentCategoryProducts.length || 1);
+  const prevIndex = (currentProductIndex - 1 + (currentCategoryProducts.length || 1)) % (currentCategoryProducts.length || 1);
   const nextProduct = currentCategoryProducts[nextIndex];
   const prevProduct = currentCategoryProducts[prevIndex];
 
   useEffect(() => {
-    if (proMode) {
-      fetch(`http://127.0.0.1:5001/set_category/${activeCategory}`)
-        .then(() => {
+    if (activeProduct) {
+      const syncServer = async () => {
+        try {
+          // Set category first
+          await fetch(`http://127.0.0.1:5001/set_category/${activeCategory}`);
+          
+          // Set item or lipstick
           if (activeCategory === 'beauty' && activeProduct?.color) {
             const { r, g, b } = activeProduct.color;
-            fetch(`http://127.0.0.1:5001/set_lipstick?r=${r}&g=${g}&b=${b}`);
+            await fetch(`http://127.0.0.1:5001/set_lipstick?r=${r}&g=${g}&b=${b}`);
           } else {
-            fetch(`http://127.0.0.1:5001/set_item/${currentProductIndex}`);
+            await fetch(`http://127.0.0.1:5001/set_item/${currentProductIndex}`);
           }
-        })
-        .catch(err => console.error("Flask sync error:", err));
+        } catch (err) {
+          console.error("Flask sync error:", err);
+        }
+      };
+      
+      syncServer();
     }
-  }, [activeCategory, currentProductIndex, proMode, activeProduct]);
+  }, [activeCategory, currentProductIndex, activeProduct]);
 
   const handleCategoryChange = (catId) => {
     setActiveCategory(catId);
@@ -97,7 +101,6 @@ const TryOn = () => {
 
   const handleAddToCart = () => {
     if (!activeProduct) return;
-    // dispatch(addToCart(...)) -- Implementation depends on store setup
     setAddedToCart(true);
     setTimeout(() => setAddedToCart(false), 2000);
   };
@@ -107,7 +110,7 @@ const TryOn = () => {
       
       {/* AR Viewport */}
       <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-        <ARCamera currentProduct={activeProduct} proMode={proMode} />
+        <ARCamera currentProduct={activeProduct} />
         
         {/* Mirror Header */}
         <div style={{ position: 'absolute', top: '40px', left: '50%', transform: 'translateX(-50%)', textAlign: 'center', pointerEvents: 'none' }}>

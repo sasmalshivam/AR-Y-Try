@@ -13,6 +13,12 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async (_
 
 export const fetchProductDetails = createAsyncThunk('products/fetchProductDetails', async (id, { rejectWithValue }) => {
   try {
+    // Local static catalogue items use numeric IDs, not MongoDB ObjectIds.
+    // Prevent backend crashes by skipping invalid IDs and letting the page render the fallback product.
+    if (!/^[0-9a-fA-F]{24}$/.test(id)) {
+      return null;
+    }
+
     const { data } = await axios.get(`http://localhost:5000/api/products/${id}`);
     return data;
   } catch (err) {

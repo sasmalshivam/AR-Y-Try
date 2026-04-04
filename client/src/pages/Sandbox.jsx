@@ -520,13 +520,16 @@ function ThreeCanvas({ state }) {
       renderer.setSize(W2, H2);
     };
     
+    const mountNode = mountRef.current;
     const ro = new ResizeObserver(onResize);
-    ro.observe(mountRef.current);
+    if (mountNode) {
+      ro.observe(mountNode);
+    }
 
     return () => {
       cancelAnimationFrame(raf);
       ro.disconnect();
-      if (mountRef.current?.contains(renderer.domElement)) mountRef.current.removeChild(renderer.domElement);
+      if (mountNode?.contains(renderer.domElement)) mountNode.removeChild(renderer.domElement);
       renderer.dispose();
     };
   }, []);

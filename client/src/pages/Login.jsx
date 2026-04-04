@@ -27,29 +27,25 @@ const Login = () => {
   };
 
   return (
-    <div className="animate-fade-in" style={{ padding: '140px 60px 60px', minHeight: '100vh', background: 'var(--ink)', position: 'relative' }}>
+    <div className="animate-fade-in" style={{ padding: '140px 60px 60px', minHeight: '100vh', background: 'var(--beige)', position: 'relative' }}>
       <Navbar />
-
-      {/* Ambient background glows */}
-      <div style={{ position: 'fixed', top: '-10%', right: '-10%', width: '600px', height: '600px', background: 'rgba(132, 148, 255, 0.04)', filter: 'blur(100px)', borderRadius: '50%', pointerEvents: 'none', zIndex: 0 }} />
-      <div style={{ position: 'fixed', bottom: '10%', left: '-5%', width: '400px', height: '400px', background: 'rgba(201, 190, 255, 0.03)', filter: 'blur(100px)', borderRadius: '50%', pointerEvents: 'none', zIndex: 0 }} />
 
       <div style={{ maxWidth: '480px', margin: '0 auto', position: 'relative', zIndex: 10 }}>
         
-        <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', padding: '60px 40px', backdropFilter: 'blur(10px)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div style={{ background: 'rgba(255,255,255,0.85)', border: '1px solid rgba(160,82,45,0.15)', padding: '60px 40px', backdropFilter: 'blur(10px)', display: 'flex', flexDirection: 'column', alignItems: 'center', boxShadow: '0 20px 60px rgba(92,51,23,0.08)' }}>
           
-          <div style={{ fontFamily: '"Space Mono", monospace', fontSize: '10px', letterSpacing: '4px', textTransform: 'uppercase', color: '#5C4033', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{ width: '20px', height: '1px', background: '#5C4033' }} />
+          <div style={{ fontFamily: '"Roboto", sans-serif', fontSize: '10px', letterSpacing: '4px', textTransform: 'uppercase', color: '#A0522D', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{ width: '20px', height: '1px', background: '#A0522D' }} />
             Access Portal
-            <div style={{ width: '20px', height: '1px', background: '#5C4033' }} />
+            <div style={{ width: '20px', height: '1px', background: '#A0522D' }} />
           </div>
           
-          <h1 style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: '48px', color: '#5C4033', fontWeight: 300, margin: '0 0 40px 0', lineHeight: 1 }}>
+          <h1 style={{ fontFamily: '"Playfair Display", serif', fontSize: '48px', color: '#3E2723', fontWeight: 700, margin: '0 0 40px 0', lineHeight: 1 }}>
             Sign In
           </h1>
 
           {error && (
-            <div style={{ width: '100%', padding: '12px', background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#ef4444', fontFamily: '"Space Mono", monospace', fontSize: '12px', marginBottom: '24px', textAlign: 'center' }}>
+            <div style={{ width: '100%', padding: '12px', background: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#c0392b', fontFamily: '"Roboto", sans-serif', fontSize: '12px', marginBottom: '24px', textAlign: 'center' }}>
               {error}
             </div>
           )}
@@ -57,39 +53,41 @@ const Login = () => {
           <form onSubmit={submitHandler} style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '24px' }}>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <label style={{ fontFamily: '"Space Mono", monospace', fontSize: '10px', color: 'rgba(255,255,255,0.6)', textTransform: 'uppercase', letterSpacing: '2px' }}>Email Address</label>
+              <label style={{ fontFamily: '"Roboto", sans-serif', fontSize: '11px', color: '#5C3317', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '2px' }}>Email Address</label>
               <input 
                 type="email" 
                 value={email} 
                 onChange={(e) => setEmail(e.target.value)}
-                style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', color: 'var(--cream)', padding: '16px', fontFamily: '"Space Mono", monospace', fontSize: '14px', outline: 'none', transition: 'border-color 0.3s' }}
-                onFocus={(e) => e.target.style.borderColor = 'var(--gold)'}
-                onBlur={(e) => e.target.style.borderColor = 'rgba(255,255,255,0.1)'}
+                style={{ background: 'rgba(245,240,232,0.8)', border: '1.5px solid rgba(160,82,45,0.25)', color: '#3E2723', padding: '16px', fontFamily: '"Roboto", sans-serif', fontSize: '14px', outline: 'none', transition: 'border-color 0.3s', borderRadius: '4px' }}
+                onFocus={(e) => e.target.style.borderColor = '#A0522D'}
+                onBlur={(e) => e.target.style.borderColor = 'rgba(160,82,45,0.25)'}
                 required
               />
             </div>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <label style={{ fontFamily: '"Space Mono", monospace', fontSize: '10px', color: 'rgba(255,255,255,0.6)', textTransform: 'uppercase', letterSpacing: '2px' }}>Password</label>
+              <label style={{ fontFamily: '"Roboto", sans-serif', fontSize: '11px', color: '#5C3317', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '2px' }}>Password</label>
               <input 
                 type="password" 
                 value={password} 
                 onChange={(e) => setPassword(e.target.value)}
-                style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', color: 'var(--cream)', padding: '16px', fontFamily: '"Space Mono", monospace', fontSize: '14px', outline: 'none', transition: 'border-color 0.3s' }}
-                onFocus={(e) => e.target.style.borderColor = 'var(--gold)'}
-                onBlur={(e) => e.target.style.borderColor = 'rgba(255,255,255,0.1)'}
+                style={{ background: 'rgba(245,240,232,0.8)', border: '1.5px solid rgba(160,82,45,0.25)', color: '#3E2723', padding: '16px', fontFamily: '"Roboto", sans-serif', fontSize: '14px', outline: 'none', transition: 'border-color 0.3s', borderRadius: '4px' }}
+                onFocus={(e) => e.target.style.borderColor = '#A0522D'}
+                onBlur={(e) => e.target.style.borderColor = 'rgba(160,82,45,0.25)'}
                 required
               />
             </div>
 
-            <Button type="submit" style={{ width: '100%', padding: '20px', fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', justifyContent: 'center', marginTop: '16px' }}>
-              {loading ? 'Authenticating...' : 'Enter System'}
-            </Button>
+            <button type="submit" style={{ width: '100%', padding: '18px', fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', background: '#5C3317', color: '#FAF0E6', border: 'none', cursor: 'pointer', fontFamily: '"Roboto", sans-serif', fontWeight: 600, marginTop: '8px', transition: 'all 0.3s', borderRadius: '4px' }}
+              onMouseOver={e => e.currentTarget.style.background = '#3E2723'}
+              onMouseOut={e => e.currentTarget.style.background = '#5C3317'}>
+              {loading ? 'Authenticating...' : 'Enter'}
+            </button>
           </form>
 
-          <div style={{ marginTop: '32px', fontFamily: '"Space Mono", monospace', fontSize: '12px', color: 'rgba(255,255,255,0.4)', textAlign: 'center' }}>
+          <div style={{ marginTop: '32px', fontFamily: '"Roboto", sans-serif', fontSize: '13px', color: '#5C3317', textAlign: 'center' }}>
             New to AR-Y-TRY?{' '}
-            <Link to="/register" style={{ color: 'var(--gold)', textDecoration: 'none', borderBottom: '1px solid var(--gold)', paddingBottom: '2px' }}>
+            <Link to="/register" style={{ color: '#A0522D', textDecoration: 'none', fontWeight: 600, borderBottom: '1px solid #A0522D', paddingBottom: '2px' }}>
               Create an account
             </Link>
           </div>

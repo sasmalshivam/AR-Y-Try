@@ -285,6 +285,7 @@ def generate_frames():
             
             # GESTURE LOGIC: Right Hand = Next, Left Hand = Previous
             def getP(id): return int(p_landmarks[id].x * w), int(p_landmarks[id].y * h)
+            
             try:
                 p11, p12, p23, p15, p16 = getP(11), getP(12), getP(23), p_landmarks[15], p_landmarks[16]
                 wristL, wristR = getP(15), getP(16)
@@ -338,7 +339,9 @@ def generate_frames():
                             pose_prevX, pose_prevY = x, y
                             shirt = applyOcclusion(shirt, x, y, [wristL, wristR])
                             img = overlayPNG(img, shirt, x, y)
-            except Exception as e: pass
+            except Exception as e:
+                print(f"Pose processing error: {e}")
+
 
         # 2. RUN FACE DETECTION IF NEEDED
         if current_category != "fashion":

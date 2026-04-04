@@ -1,45 +1,45 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 
 // Scroll Reveal from Left
 export const RevealFromLeft = ({ children, delay = 0 }) => {
   return (
-    <motion.div
+    <Motion.div
       initial={{ opacity: 0, x: -60 }}
       whileInView={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.7, delay, ease: 'easeOut' }}
       viewport={{ once: false, amount: 0.3 }}
     >
       {children}
-    </motion.div>
+    </Motion.div>
   );
 };
 
 // Scroll Reveal from Right
 export const RevealFromRight = ({ children, delay = 0 }) => {
   return (
-    <motion.div
+    <Motion.div
       initial={{ opacity: 0, x: 60 }}
       whileInView={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.7, delay, ease: 'easeOut' }}
       viewport={{ once: false, amount: 0.3 }}
     >
       {children}
-    </motion.div>
+    </Motion.div>
   );
 };
 
 // Scroll Reveal from Bottom
 export const RevealFromBottom = ({ children, delay = 0 }) => {
   return (
-    <motion.div
+    <Motion.div
       initial={{ opacity: 0, y: 60 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, delay, ease: 'easeOut' }}
       viewport={{ once: false, amount: 0.3 }}
     >
       {children}
-    </motion.div>
+    </Motion.div>
   );
 };
 
@@ -91,7 +91,7 @@ const CounterValue = ({ value, duration = 2 }) => {
 export const StatCard = ({ icon, value, label, delay = 0 }) => {
   return (
     <RevealFromBottom delay={delay}>
-      <motion.div
+      <Motion.div
         style={{
           padding: '24px',
           background: '#FAF0E6',
@@ -129,7 +129,7 @@ export const StatCard = ({ icon, value, label, delay = 0 }) => {
         >
           {label}
         </div>
-      </motion.div>
+      </Motion.div>
     </RevealFromBottom>
   );
 };
@@ -139,21 +139,21 @@ export const SlideInText = ({ text, direction = 'left', delay = 0 }) => {
   const initialX = direction === 'left' ? -40 : 40;
 
   return (
-    <motion.span
+    <Motion.span
       initial={{ opacity: 0, x: initialX }}
       whileInView={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.6, delay, ease: 'easeOut' }}
       viewport={{ once: false, amount: 0.5 }}
     >
       {text}
-    </motion.span>
+    </Motion.span>
   );
 };
 
 // Pulse Animation (for highlights)
 export const PulseElement = ({ children }) => {
   return (
-    <motion.div
+    <Motion.div
       animate={{ scale: [1, 1.05, 1] }}
       transition={{
         duration: 2,
@@ -162,7 +162,7 @@ export const PulseElement = ({ children }) => {
       }}
     >
       {children}
-    </motion.div>
+    </Motion.div>
   );
 };
 

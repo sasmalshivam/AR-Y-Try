@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import AnimatedProductCard from './AnimatedProductCard';
 import '../styles/ProductsGallery.css';
 
@@ -77,7 +77,7 @@ const AnimatedProductsGallery = () => {
 
   return (
     <section className="products-gallery">
-      <motion.div
+      <Motion.div
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -86,9 +86,9 @@ const AnimatedProductsGallery = () => {
       >
         <h2 className="gallery-title">Shop Our Collections</h2>
         <p className="gallery-subtitle">Explore our curated selection with AR Try-On</p>
-      </motion.div>
+      </Motion.div>
 
-      <motion.div
+      <Motion.div
         className="category-filters"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -96,7 +96,7 @@ const AnimatedProductsGallery = () => {
         viewport={{ once: false }}
       >
         {['all', 'eyewear', 'fashion', 'jewelry', 'beauty', 'furniture'].map((cat) => (
-          <motion.button
+          <Motion.button
             key={cat}
             className={`filter-btn ${selectedCategory === cat ? 'active' : ''}`}
             variants={buttonVariants}
@@ -106,11 +106,11 @@ const AnimatedProductsGallery = () => {
             animate={selectedCategory === cat ? 'active' : 'idle'}
           >
             {cat.charAt(0).toUpperCase() + cat.slice(1)}
-          </motion.button>
+          </Motion.button>
         ))}
-      </motion.div>
+      </Motion.div>
 
-      <motion.div
+      <Motion.div
         className="products-grid"
         variants={categoryVariants}
         initial="hidden"
@@ -120,7 +120,7 @@ const AnimatedProductsGallery = () => {
         {getFilteredProducts().map((product, index) => (
           <AnimatedProductCard key={product.id} product={product} index={index} />
         ))}
-      </motion.div>
+      </Motion.div>
     </section>
   );
 };

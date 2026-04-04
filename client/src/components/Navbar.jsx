@@ -23,8 +23,12 @@ const Navbar = () => {
   return (
     <nav id="navbar" className={scrolled ? 'scrolled' : ''}>
       <Link to="/" className="nav-logo" style={{ textDecoration: 'none' }}>
-        <div className="logo-icon"></div>
-        AR<span>-Y-</span>TRY
+        <div className="logo-icon">
+          <div className="logo-ring-outer" />
+          <div className="logo-ring-inner" />
+          <div className="logo-center-dot" />
+        </div>
+        <span className="logo-text">AR<span>-Y-</span>TRY</span>
       </Link>
       <ul className="nav-links">
         <li><Link to="/products" style={{ textDecoration: 'none' }}>Catalog</Link></li>
@@ -35,15 +39,15 @@ const Navbar = () => {
       <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
         {userInfo ? (
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <span style={{ color: '#A0522D', fontFamily: '"Roboto", sans-serif', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '1px' }}>
+            <span style={{ color: '#3E2723', fontFamily: '"Roboto", sans-serif', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 600 }}>
               {userInfo.name.split(' ')[0]}
             </span>
-            <button onClick={() => dispatch(logout())} style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '50%', color: 'var(--cream)', cursor: 'pointer', display: 'flex', padding: '8px', transition: 'all 0.3s' }} onMouseOver={e=>e.currentTarget.style.borderColor='var(--gold)'} onMouseOut={e=>e.currentTarget.style.borderColor='rgba(255,255,255,0.1)'}>
+            <button onClick={() => dispatch(logout())} style={{ background: 'rgba(92,51,23,0.08)', border: '1.5px solid #A0522D', borderRadius: '50%', color: '#3E2723', cursor: 'pointer', display: 'flex', padding: '8px', transition: 'all 0.3s' }} onMouseOver={e=>e.currentTarget.style.background='rgba(92,51,23,0.18)'} onMouseOut={e=>e.currentTarget.style.background='rgba(92,51,23,0.08)'}>
               <User size={18} />
             </button>
           </div>
         ) : (
-          <Link to="/login" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '50%', color: 'var(--cream)', cursor: 'pointer', display: 'flex', padding: '8px', transition: 'all 0.3s' }} onMouseOver={e=>e.currentTarget.style.borderColor='var(--gold)'} onMouseOut={e=>e.currentTarget.style.borderColor='rgba(255,255,255,0.1)'}>
+          <Link to="/login" style={{ background: 'rgba(92,51,23,0.08)', border: '1.5px solid #A0522D', borderRadius: '50%', color: '#3E2723', cursor: 'pointer', display: 'flex', padding: '8px', transition: 'all 0.3s' }} onMouseOver={e=>e.currentTarget.style.background='rgba(92,51,23,0.18)'} onMouseOut={e=>e.currentTarget.style.background='rgba(92,51,23,0.08)'}>
             <User size={18} />
           </Link>
         )}
