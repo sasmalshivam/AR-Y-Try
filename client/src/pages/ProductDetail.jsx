@@ -38,13 +38,11 @@ const ProductDetail = () => {
     8: { _id: '8', name: 'Gold Pendant', price: 18999, category: 'jewelry', arEnabled: false, description: 'Classic gold pendant.', images: ['/src/assets/products/jewelry/2.png'] },
     71: { _id: '71', name: 'Silver Pendant', price: 12999, category: 'jewelry', arEnabled: false, description: 'Chic silver pendant.', images: ['/src/assets/products/jewelry/3.png'] },
     73: { _id: '73', name: 'Crystal Pendant', price: 16999, category: 'jewelry', arEnabled: false, description: 'Beautiful crystal pendant.', images: ['/src/assets/products/jewelry/4.png'] },
-    101: { _id: '101', name: 'Ruby Rush', price: 2499, category: 'beauty', arEnabled: false, description: 'Matte ruby lipstick.', images: ['/src/assets/products/beauty/1.png'], color: { r: 180, g: 0, b: 0 } },
-    102: { _id: '102', name: 'Mauve Mist', price: 2499, category: 'beauty', arEnabled: false, description: 'Satin mauve lipstick.', images: ['/src/assets/products/beauty/2.png'], color: { r: 150, g: 70, b: 120 } },
-    103: { _id: '103', name: 'Nude Silk', price: 2499, category: 'beauty', arEnabled: false, description: 'Gloss nude lipstick.', images: ['/src/assets/products/beauty/1.png'], color: { r: 188, g: 130, b: 110 } },
-    104: { _id: '104', name: 'Deep Plum', price: 2499, category: 'beauty', arEnabled: false, description: 'Velvet deep plum lipstick.', images: ['/src/assets/products/beauty/1.png'], color: { r: 80, g: 0, b: 50 } },
-    105: { _id: '105', name: 'Sunset Coral', price: 2499, category: 'beauty', arEnabled: false, description: 'Bright sunset coral lipstick.', images: ['/src/assets/products/beauty/1.png'], color: { r: 255, g: 80, b: 60 } },
-    11: { _id: '11', name: 'Modern Sofa', price: 63999, category: 'furniture', arEnabled: false, description: 'Modern lounge sofa.', images: ['/src/assets/products/furniture/product-1.jpg'] },
-    12: { _id: '12', name: 'Lounge Chair', price: 31999, category: 'furniture', arEnabled: false, description: 'Comfortable lounge chair.', images: ['/src/assets/products/furniture/product-2.jpg'] },
+    101: { _id: '101', name: 'Nude Silk', price: 2499, category: 'beauty', arEnabled: true, description: 'Premium nude silk lipstick with a natural finish.', images: ['/src/assets/products/beauty/shade_nude.png'], color: { r: 188, g: 130, b: 110 } },
+    102: { _id: '102', name: 'Mauve Mist', price: 2699, category: 'beauty', arEnabled: true, description: 'Soft mauve lipstick with a satin finish.', images: ['/src/assets/products/beauty/shade_mauve.png'], color: { r: 150, g: 70, b: 120 } },
+    103: { _id: '103', name: 'Deep Plum', price: 2899, category: 'beauty', arEnabled: true, description: 'Rich berry plum lipstick for a bold look.', images: ['/src/assets/products/beauty/shade_plum.png'], color: { r: 80, g: 0, b: 50 } },
+    104: { _id: '104', name: 'Sunset Coral', price: 2499, category: 'beauty', arEnabled: true, description: 'Bright sunset coral lipstick for a fresh glow.', images: ['/src/assets/products/beauty/shade_coral.png'], color: { r: 255, g: 80, b: 60 } },
+    105: { _id: '105', name: 'Ruby Rush', price: 2999, category: 'beauty', arEnabled: true, description: 'Classic ruby red lipstick for timeless elegance.', images: ['/src/assets/products/beauty/shade_ruby.png'], color: { r: 180, g: 0, b: 0 } },
   };
 
   const mockProduct = product || localProducts[id] || {
@@ -103,7 +101,7 @@ const ProductDetail = () => {
               )}
 
               <div style={{ position: 'absolute', bottom: '2rem', left: '0', right: '0', display: 'flex', justifyContent: 'center' }}>
-                {(mockProduct.arEnabled || mockProduct.category === 'fashion' || mockProduct.category === 'eyewear') && (
+                {(mockProduct.arEnabled || mockProduct.category === 'fashion' || mockProduct.category === 'eyewear' || mockProduct.category === 'beauty') && (
                   <Motion.div
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}

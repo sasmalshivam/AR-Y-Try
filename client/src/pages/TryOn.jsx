@@ -48,21 +48,21 @@ const TryOn = () => {
       { id: 73, name: 'Crystal Pendant', price: '16999', image: '/src/assets/products/jewelry/4.png' },
     ],
     beauty: [
-      { id: 101, name: 'Ruby Rush', price: '2499', image: '/src/assets/products/beauty/1.png', color: { r: 180, g: 0, b: 0 } },
-      { id: 102, name: 'Mauve Mist', price: '2499', image: '/src/assets/products/beauty/2.png', color: { r: 150, g: 70, b: 120 } },
-      { id: 103, name: 'Nude Silk', price: '2499', image: '/src/assets/products/beauty/1.png', color: { r: 188, g: 130, b: 110 } },
-      { id: 104, name: 'Deep Plum', price: '2499', image: '/src/assets/products/beauty/1.png', color: { r: 80, g: 0, b: 50 } },
-      { id: 105, name: 'Sunset Coral', price: '2499', image: '/src/assets/products/beauty/1.png', color: { r: 255, g: 80, b: 60 } },
-      { id: 106, name: 'Petal Pink', price: '2499', image: '/src/assets/products/beauty/1.png', color: { r: 230, g: 140, b: 160 } },
-      { id: 107, name: 'Vintage Rose', price: '2499', image: '/src/assets/products/beauty/1.png', color: { r: 160, g: 70, b: 80 } },
-      { id: 108, name: 'Cocoa Glaze', price: '2499', image: '/src/assets/products/beauty/1.png', color: { r: 90, g: 50, b: 40 } },
-      { id: 109, name: 'Berry Bliss', price: '2499', image: '/src/assets/products/beauty/1.png', color: { r: 120, g: 0, b: 30 } },
-      { id: 110, name: 'Honey Beige', price: '2499', image: '/src/assets/products/beauty/1.png', color: { r: 200, g: 150, b: 120 } },
-      { id: 111, name: 'Electric Red', price: '2499', image: '/src/assets/products/beauty/1.png', color: { r: 255, g: 0, b: 0 } },
-      { id: 112, name: 'Soft Peach', price: '2499', image: '/src/assets/products/beauty/1.png', color: { r: 255, g: 180, b: 150 } },
-      { id: 113, name: 'Wine Deep', price: '2499', image: '/src/assets/products/beauty/1.png', color: { r: 100, g: 10, b: 10 } },
-      { id: 114, name: 'Candy Fuchsia', price: '2499', image: '/src/assets/products/beauty/1.png', color: { r: 210, g: 20, b: 140 } },
-      { id: 115, name: 'Burnt Sienna', price: '2499', image: '/src/assets/products/beauty/1.png', color: { r: 140, g: 60, b: 40 } }
+      { id: 101, name: 'Nude Silk', price: '2499', image: '/src/assets/products/beauty/shade_nude.png', color: { r: 188, g: 130, b: 110 } },
+      { id: 102, name: 'Mauve Mist', price: '2699', image: '/src/assets/products/beauty/shade_mauve.png', color: { r: 150, g: 70, b: 120 } },
+      { id: 103, name: 'Deep Plum', price: '2899', image: '/src/assets/products/beauty/shade_plum.png', color: { r: 80, g: 0, b: 50 } },
+      { id: 104, name: 'Sunset Coral', price: '2499', image: '/src/assets/products/beauty/shade_coral.png', color: { r: 255, g: 80, b: 60 } },
+      { id: 105, name: 'Ruby Rush', price: '2999', image: '/src/assets/products/beauty/shade_ruby.png', color: { r: 180, g: 0, b: 0 } },
+      { id: 106, name: 'Petal Pink', price: '2499', image: '/src/assets/products/beauty/shade_nude.png', color: { r: 230, g: 140, b: 160 } },
+      { id: 107, name: 'Vintage Rose', price: '2499', image: '/src/assets/products/beauty/shade_nude.png', color: { r: 160, g: 70, b: 80 } },
+      { id: 108, name: 'Cocoa Glaze', price: '2499', image: '/src/assets/products/beauty/shade_nude.png', color: { r: 90, g: 50, b: 40 } },
+      { id: 109, name: 'Berry Bliss', price: '2499', image: '/src/assets/products/beauty/shade_nude.png', color: { r: 120, g: 0, b: 30 } },
+      { id: 110, name: 'Honey Beige', price: '2499', image: '/src/assets/products/beauty/shade_nude.png', color: { r: 200, g: 150, b: 120 } },
+      { id: 111, name: 'Electric Red', price: '2499', image: '/src/assets/products/beauty/shade_ruby.png', color: { r: 255, g: 0, b: 0 } },
+      { id: 112, name: 'Soft Peach', price: '2499', image: '/src/assets/products/beauty/shade_nude.png', color: { r: 255, g: 180, b: 150 } },
+      { id: 113, name: 'Wine Deep', price: '2499', image: '/src/assets/products/beauty/shade_nude.png', color: { r: 100, g: 10, b: 10 } },
+      { id: 114, name: 'Candy Fuchsia', price: '2499', image: '/src/assets/products/beauty/shade_nude.png', color: { r: 210, g: 20, b: 140 } },
+      { id: 115, name: 'Burnt Sienna', price: '2499', image: '/src/assets/products/beauty/shade_nude.png', color: { r: 140, g: 60, b: 40 } }
     ]
   };
 

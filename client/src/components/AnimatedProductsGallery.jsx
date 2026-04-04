@@ -30,15 +30,11 @@ const AnimatedProductsGallery = () => {
       { id: 73, name: 'Crystal Pendant', price: '16999', image: '/src/assets/products/jewelry/4.png', label: 'NEW', category: 'jewelry' },
     ],
     beauty: [
-      { id: 101, name: 'Ruby Rush', price: '2499', image: '/src/assets/products/beauty/1.png', label: 'MATTE', category: 'beauty', color: { r: 180, g: 0, b: 0 } },
-      { id: 102, name: 'Mauve Mist', price: '2499', image: '/src/assets/products/beauty/2.png', label: 'SATIN', category: 'beauty', color: { r: 150, g: 70, b: 120 } },
-      { id: 103, name: 'Nude Silk', price: '2499', image: '/src/assets/products/beauty/1.png', label: 'GLOSS', category: 'beauty', color: { r: 188, g: 130, b: 110 } },
-      { id: 104, name: 'Deep Plum', price: '2499', image: '/src/assets/products/beauty/1.png', label: 'VELVET', category: 'beauty', color: { r: 80, g: 0, b: 50 } },
-      { id: 105, name: 'Sunset Coral', price: '2499', image: '/src/assets/products/beauty/1.png', label: 'BRIGHT', category: 'beauty', color: { r: 255, g: 80, b: 60 } },
-    ],
-    furniture: [
-      { id: 11, name: 'Modern Sofa', price: '63999', image: '/src/assets/products/furniture/product-1.jpg', label: 'NEW', category: 'furniture' },
-      { id: 12, name: 'Lounge Chair', price: '31999', image: '/src/assets/products/furniture/product-2.jpg', label: 'POPULAR', category: 'furniture' },
+      { id: 101, name: 'Nude Silk', price: '2499', image: '/src/assets/products/beauty/shade_nude.png', label: 'PREMIUM', category: 'beauty', color: { r: 188, g: 130, b: 110 } },
+      { id: 102, name: 'Mauve Mist', price: '2699', image: '/src/assets/products/beauty/shade_mauve.png', label: 'TRENDING', category: 'beauty', color: { r: 150, g: 70, b: 120 } },
+      { id: 103, name: 'Deep Plum', price: '2899', image: '/src/assets/products/beauty/shade_plum.png', label: 'LUXURY', category: 'beauty', color: { r: 80, g: 0, b: 50 } },
+      { id: 104, name: 'Sunset Coral', price: '2499', image: '/src/assets/products/beauty/shade_coral.png', label: 'NEW', category: 'beauty', color: { r: 255, g: 80, b: 60 } },
+      { id: 105, name: 'Ruby Rush', price: '2999', image: '/src/assets/products/beauty/shade_ruby.png', label: 'HOT', category: 'beauty', color: { r: 180, g: 0, b: 0 } },
     ],
   };
 
@@ -95,7 +91,7 @@ const AnimatedProductsGallery = () => {
         transition={{ delay: 0.2, duration: 0.6 }}
         viewport={{ once: false }}
       >
-        {['all', 'eyewear', 'fashion', 'jewelry', 'beauty', 'furniture'].map((cat) => (
+        {['all', 'eyewear', 'fashion', 'jewelry', 'beauty'].map((cat) => (
           <Motion.button
             key={cat}
             className={`filter-btn ${selectedCategory === cat ? 'active' : ''}`}

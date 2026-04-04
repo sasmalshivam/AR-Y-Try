@@ -83,6 +83,56 @@ const mockProducts = [
     arAssetUrl: 'https://cdn-icons-png.flaticon.com/512/2806/2806086.png',
     stock: 60,
     rating: { avg: 4.6, count: 42 }
+  },
+  {
+    name: 'Nude Silk Lipstick',
+    description: 'Premium nude silk lipstick with a natural finish.',
+    price: 24.99,
+    category: 'beauty',
+    arEnabled: true,
+    arType: 'face',
+    stock: 100,
+    rating: { avg: 4.8, count: 150 }
+  },
+  {
+    name: 'Mauve Mist Lipstick',
+    description: 'Soft mauve lipstick with a satin finish.',
+    price: 26.99,
+    category: 'beauty',
+    arEnabled: true,
+    arType: 'face',
+    stock: 80,
+    rating: { avg: 4.7, count: 95 }
+  },
+  {
+    name: 'Deep Plum Lipstick',
+    description: 'Rich berry plum lipstick for a bold look.',
+    price: 28.99,
+    category: 'beauty',
+    arEnabled: true,
+    arType: 'face',
+    stock: 60,
+    rating: { avg: 4.9, count: 120 }
+  },
+  {
+    name: 'Sunset Coral Lipstick',
+    description: 'Bright sunset coral lipstick for a fresh glow.',
+    price: 24.99,
+    category: 'beauty',
+    arEnabled: true,
+    arType: 'face',
+    stock: 90,
+    rating: { avg: 4.6, count: 85 }
+  },
+  {
+    name: 'Ruby Rush Lipstick',
+    description: 'Classic ruby red lipstick for timeless elegance.',
+    price: 29.99,
+    category: 'beauty',
+    arEnabled: true,
+    arType: 'face',
+    stock: 75,
+    rating: { avg: 5.0, count: 210 }
   }
 ];
 

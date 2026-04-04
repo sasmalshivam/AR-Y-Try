@@ -34,6 +34,7 @@ const Navbar = () => {
         <li><Link to="/products" style={{ textDecoration: 'none' }}>Catalog</Link></li>
         <li><Link to="/sandbox" style={{ textDecoration: 'none' }}>Avatar Sandbox</Link></li>
         <li><Link to="/try-on" style={{ textDecoration: 'none' }}>Virtual Try-On</Link></li>
+        <li><Link to="/ai-mirror" style={{ textDecoration: 'none' }}>AI Mirror</Link></li>
         <li><Link to="/roadmap" style={{ textDecoration: 'none' }}>Roadmap</Link></li>
       </ul>
       <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>

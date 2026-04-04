@@ -21,9 +21,14 @@ const Cart = () => {
   };
 
   const handleQtyChange = (item, diff) => {
-    const newQty = Math.max(1, Math.min(item.countInStock || 10, item.qty + diff));
-    if (newQty !== item.qty) {
-      dispatch(updateCartQty({ product: item.product, qty: newQty }));
+    const newQty = item.qty + diff;
+    if (newQty < 1) {
+      dispatch(removeFromCart(item.product));
+    } else {
+      const finalQty = Math.min(item.countInStock || 10, newQty);
+      if (finalQty !== item.qty) {
+        dispatch(updateCartQty({ product: item.product, qty: finalQty }));
+      }
     }
   };
 

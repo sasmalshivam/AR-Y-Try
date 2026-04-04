@@ -10,6 +10,7 @@ import TryOn from './pages/TryOn';
 import Roadmap from './pages/Roadmap';
 import CustomCursor from './components/CustomCursor';
 import Sandbox from './pages/Sandbox';
+import AIMirror from './pages/AIMirror';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/try-on" element={<TryOn />} />
           <Route path="/roadmap" element={<Roadmap />} />
           <Route path="/sandbox" element={<Sandbox />} />
+          <Route path="/ai-mirror" element={<AIMirror />} />
         </Routes>
       </div>
     </Router>
