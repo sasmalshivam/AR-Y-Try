@@ -1,12 +1,11 @@
 import React from 'react';
 import AnimatedProductsGallery from '../components/AnimatedProductsGallery';
-import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const ProductList = () => {
   return (
     <div style={{ minHeight: '100vh', background: '#F5F5DC' }}>
-      <Navbar />
+      
 
       {/* Hero section for product page */}
       <section style={{ padding: '120px 40px 80px', textAlign: 'center', background: 'linear-gradient(135deg, #F5F5DC 0%, #FAF0E6 100%)' }}>

@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { ArrowLeft, ShoppingCart, Loader, Camera, Info, Settings, Share2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { addToCart } from '../store/slices/cartSlice';
 import ARCamera from '../components/ar/ARCamera';
 import ProductSwitcher from '../components/ar/ProductSwitcher';
 import { formatPrice } from '../utils/currency';
 
 const TryOn = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   
   const [addedToCart, setAddedToCart] = useState(false);
   const [activeCategory, setActiveCategory] = useState('fashion');
@@ -101,6 +104,16 @@ const TryOn = () => {
 
   const handleAddToCart = () => {
     if (!activeProduct) return;
+    
+    dispatch(addToCart({
+      product: String(activeProduct.id),
+      name: activeProduct.name,
+      image: activeProduct.image,
+      price: Number(activeProduct.price),
+      countInStock: 10,
+      qty: 1
+    }));
+
     setAddedToCart(true);
     setTimeout(() => setAddedToCart(false), 2000);
   };

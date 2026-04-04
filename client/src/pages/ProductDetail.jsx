@@ -20,25 +20,55 @@ const ProductDetail = () => {
     dispatch(fetchProductDetails(id));
   }, [dispatch, id]);
 
-  const mockProduct = product || {
+  // Local product data matching the gallery
+  const localProducts = {
+    1: { _id: '1', name: 'Aviator Stealth', price: 11999, category: 'eyewear', arEnabled: true, description: 'Premium aviator sunglasses with stealth technology.', images: ['/src/assets/products/eyewear/1.png'] },
+    2: { _id: '2', name: 'Urban Wayfarer', price: 7199, category: 'eyewear', arEnabled: true, description: 'Classic wayfarer style for urban explorers.', images: ['/src/assets/products/eyewear/2.png'] },
+    3: { _id: '3', name: 'Gold Rim Lux', price: 15999, category: 'eyewear', arEnabled: true, description: 'Luxurious gold rimmed glasses.', images: ['/src/assets/products/eyewear/3.png'] },
+    31: { _id: '31', name: 'Cyber Shield', price: 18999, category: 'eyewear', arEnabled: true, description: 'Advanced cyber shield eyewear.', images: ['/src/assets/products/eyewear/1.png'] },
+    4: { _id: '4', name: 'Premium Classic Shirt', price: 4799, category: 'fashion', arEnabled: true, description: 'Classic premium shirt.', images: ['/src/assets/products/fashion/1.png'] },
+    5: { _id: '5', name: 'Signature Navy T-Shirt', price: 14399, category: 'fashion', arEnabled: true, description: 'Signature navy t-shirt.', images: ['/src/assets/products/fashion/2.png'] },
+    6: { _id: '6', name: 'Modern Fit T-Shirt', price: 10399, category: 'fashion', arEnabled: true, description: 'Modern fit t-shirt.', images: ['/src/assets/products/fashion/3.png'] },
+    41: { _id: '41', name: 'Midnight Essential', price: 5299, category: 'fashion', arEnabled: true, description: 'Midnight essential shirt.', images: ['/src/assets/products/fashion/4.png'] },
+    42: { _id: '42', name: 'Arctic White Tee', price: 3499, category: 'fashion', arEnabled: true, description: 'Arctic white t-shirt.', images: ['/src/assets/products/fashion/5.png'] },
+    43: { _id: '43', name: 'Street Style Tee', price: 4999, category: 'fashion', arEnabled: true, description: 'Street style t-shirt.', images: ['/src/assets/products/fashion/6.png'] },
+    44: { _id: '44', name: 'Urban Graphic Shirt', price: 5799, category: 'fashion', arEnabled: true, description: 'Urban graphic shirt.', images: ['/src/assets/products/fashion/7.png'] },
+    45: { _id: '45', name: 'Bold Print Tee', price: 4299, category: 'fashion', arEnabled: true, description: 'Bold print t-shirt.', images: ['/src/assets/products/fashion/8.png'] },
+    7: { _id: '7', name: 'Diamond Pendant', price: 24999, category: 'jewelry', arEnabled: false, description: 'Elegant diamond pendant.', images: ['/src/assets/products/jewelry/1.png'] },
+    8: { _id: '8', name: 'Gold Pendant', price: 18999, category: 'jewelry', arEnabled: false, description: 'Classic gold pendant.', images: ['/src/assets/products/jewelry/2.png'] },
+    71: { _id: '71', name: 'Silver Pendant', price: 12999, category: 'jewelry', arEnabled: false, description: 'Chic silver pendant.', images: ['/src/assets/products/jewelry/3.png'] },
+    73: { _id: '73', name: 'Crystal Pendant', price: 16999, category: 'jewelry', arEnabled: false, description: 'Beautiful crystal pendant.', images: ['/src/assets/products/jewelry/4.png'] },
+    101: { _id: '101', name: 'Ruby Rush', price: 2499, category: 'beauty', arEnabled: false, description: 'Matte ruby lipstick.', images: ['/src/assets/products/beauty/1.png'], color: { r: 180, g: 0, b: 0 } },
+    102: { _id: '102', name: 'Mauve Mist', price: 2499, category: 'beauty', arEnabled: false, description: 'Satin mauve lipstick.', images: ['/src/assets/products/beauty/2.png'], color: { r: 150, g: 70, b: 120 } },
+    103: { _id: '103', name: 'Nude Silk', price: 2499, category: 'beauty', arEnabled: false, description: 'Gloss nude lipstick.', images: ['/src/assets/products/beauty/1.png'], color: { r: 188, g: 130, b: 110 } },
+    104: { _id: '104', name: 'Deep Plum', price: 2499, category: 'beauty', arEnabled: false, description: 'Velvet deep plum lipstick.', images: ['/src/assets/products/beauty/1.png'], color: { r: 80, g: 0, b: 50 } },
+    105: { _id: '105', name: 'Sunset Coral', price: 2499, category: 'beauty', arEnabled: false, description: 'Bright sunset coral lipstick.', images: ['/src/assets/products/beauty/1.png'], color: { r: 255, g: 80, b: 60 } },
+    11: { _id: '11', name: 'Modern Sofa', price: 63999, category: 'furniture', arEnabled: false, description: 'Modern lounge sofa.', images: ['/src/assets/products/furniture/product-1.jpg'] },
+    12: { _id: '12', name: 'Lounge Chair', price: 31999, category: 'furniture', arEnabled: false, description: 'Comfortable lounge chair.', images: ['/src/assets/products/furniture/product-2.jpg'] },
+  };
+
+  const mockProduct = product || localProducts[id] || {
     _id: id,
-    name: 'Cyberpunk Goggles',
-    price: 9600,
-    category: 'eyewear',
-    arEnabled: true,
-    description: 'Immersive augmented reality goggles equipped with visual distortion tech to seamlessly blend digital overlay logic onto your physical aesthetic.',
-    images: [] // no images yet
+    name: 'Product Not Found',
+    price: 0,
+    category: 'unknown',
+    arEnabled: false,
+    description: 'This product could not be loaded.',
+    images: []
   };
 
   const handleAddToCart = () => {
-    dispatch(addToCart({
+    const cartItem = {
       product: mockProduct._id,
       name: mockProduct.name,
       image: mockProduct.images?.[0] || 'https://via.placeholder.com/150',
       price: mockProduct.price,
       countInStock: mockProduct.countInStock || 10,
       qty
-    }));
+    };
+    console.log('Adding to cart from ProductDetail:', cartItem);
+    dispatch(addToCart(cartItem));
+    alert(`${mockProduct.name} added to cart!`);
   };
 
   return (

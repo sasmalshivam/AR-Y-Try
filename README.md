@@ -43,6 +43,26 @@ A dedicated `/sandbox` environment enabling users to customize geometry, accesso
 
 ---
 
+## 📸 Screenshots
+
+<div align="center">
+
+### 🏠 Home Page
+![Home Page](screenshots/home.png)
+
+### 🛍️ Product Catalog
+![Product Catalog](screenshots/catalog.png)
+
+### 🕶️ Virtual Try-On (AR)
+![Virtual Try-On](screenshots/tryon.png)
+
+### 🛒 Shopping Cart
+![Shopping Cart](screenshots/cart.png)
+
+</div>
+
+---
+
 ## 🏗️ Architecture
 
 ARYĀ operates in a decoupled monorepo structure.

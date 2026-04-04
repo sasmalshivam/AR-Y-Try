@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from '../components/Navbar';
 import HomeHero from '../components/HomeHero';
 import HomeStories from '../components/HomeStories';
 import Footer from '../components/Footer';
@@ -22,7 +21,6 @@ const Home = () => {
     <div className="arya-landing">
       <div id="progress-bar" style={{ width: `${scrollProgress}%` }}></div>
       
-      <Navbar />
       <HomeHero />
       <HomeStories />
       <Footer />

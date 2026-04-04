@@ -12,15 +12,23 @@ const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const item = action.payload;
-      const existItem = state.cartItems.find((x) => x.product === item.product);
+      console.log('--- CART ADD LOG ---');
+      console.log('Action payload:', item);
+      console.log('Current cart items:', state.cartItems.map(i => i.product));
+      
+      const existItem = state.cartItems.find((x) => String(x.product) === String(item.product));
 
       if (existItem) {
-        // Always increment the quantity when adding to cart from product pages
         existItem.qty += item.qty;
+        console.log('MATCHED! Updated existing item quantity:', existItem.qty);
       } else {
-        state.cartItems.push(item);
+        state.cartItems = [...state.cartItems, item];
+        console.log('NO MATCH! Added new item, total items now:', state.cartItems.length);
       }
+      
       localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+      console.log('Saved to localStorage successfully');
+      console.log('--------------------');
     },
     updateCartQty: (state, action) => {
       const { product, qty } = action.payload;

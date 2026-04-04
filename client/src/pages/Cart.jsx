@@ -1,10 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { removeFromCart, updateCartQty } from '../store/slices/cartSlice';
+import { removeFromCart, updateCartQty, addToCart } from '../store/slices/cartSlice';
 import { Trash2, ShoppingBag, ArrowLeft, ArrowRight } from 'lucide-react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import Button from '../components/ui/Button';
 import { formatPrice } from '../utils/currency';
 
@@ -12,9 +10,13 @@ const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
-  const cartItems = useSelector(state => state.cart.cartItems);
+  const cartData = useSelector(state => ({ items: state.cart.cartItems, hash: JSON.stringify(state.cart.cartItems) }));
+  const cartItems = cartData.items;
+
+  console.log('Cart render - items:', cartItems);
 
   const handleRemove = (id) => {
+    console.log('Removing item:', id);
     dispatch(removeFromCart(id));
   };
 
@@ -29,7 +31,7 @@ const Cart = () => {
 
   return (
     <div className="animate-fade-in" style={{ padding: '140px 60px 60px', minHeight: '100vh', background: 'var(--ink)', position: 'relative' }}>
-      <Navbar />
+      
 
       {/* Ambient background glows */}
       <div style={{ position: 'fixed', top: '-10%', right: '-10%', width: '600px', height: '600px', background: 'rgba(132, 148, 255, 0.04)', filter: 'blur(100px)', borderRadius: '50%', pointerEvents: 'none', zIndex: 0 }} />
@@ -47,27 +49,31 @@ const Cart = () => {
               Your Bag
               <div style={{ width: '40px', height: '1px', background: 'var(--gold)' }} />
             </div>
-            <h1 style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: 'clamp(40px, 5vw, 64px)', fontWeight: 300, lineHeight: 1, margin: 0, color: 'var(--cream)' }}>
+            <h1 style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: 'clamp(40px, 5vw, 64px)', fontWeight: 300, lineHeight: 1, margin: 0, color: 'var(--gold)' }}>
               Order Contents
             </h1>
+            <p style={{ color: 'var(--gold)', fontSize: '14px' }}>Cart items: {cartItems.length}</p>
           </div>
         </div>
 
         {cartItems.length === 0 ? (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '100px 0', background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)' }}>
             <ShoppingBag size={64} color="rgba(255,255,255,0.1)" style={{ marginBottom: '24px' }} />
-            <h2 style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: '32px', color: 'var(--cream)', fontWeight: 300, marginBottom: '16px' }}>Your bag is empty</h2>
-            <p style={{ color: 'rgba(255,255,255,0.4)', fontFamily: '"Space Mono", monospace', fontSize: '12px', letterSpacing: '1px', marginBottom: '32px', textTransform: 'uppercase' }}>Discover something extraordinary.</p>
-            <Link to="/products" style={{ textDecoration: 'none' }}>
-              <Button style={{ padding: '16px 32px', fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase' }}>Explore Catalog <ArrowRight size={16}/></Button>
-            </Link>
+            <h2 style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: '32px', color: 'var(--gold)', fontWeight: 300, marginBottom: '16px' }}>Your bag is empty</h2>
+            <p style={{ color: 'var(--gold)', fontFamily: '"Space Mono", monospace', fontSize: '12px', letterSpacing: '1px', marginBottom: '32px', textTransform: 'uppercase' }}>Discover something extraordinary.</p>
+            <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+              <Link to="/products" style={{ textDecoration: 'none' }}>
+                <Button style={{ padding: '16px 32px', fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase' }}>Explore Catalog <ArrowRight size={16}/></Button>
+              </Link>
+              <Button onClick={() => dispatch(addToCart({ product: 'test', name: 'Test Product', image: 'https://via.placeholder.com/150', price: 100, countInStock: 10, qty: 1 }))} style={{ padding: '16px 32px', fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', background: 'var(--gold)', color: 'var(--ink)' }}>Add Test Item</Button>
+            </div>
           </div>
         ) : (
           <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 5fr) minmax(0, 3fr)', gap: '60px' }}>
             
             {/* Left: Items List */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '16px', borderBottom: '1px solid rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.4)', fontFamily: '"Space Mono", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '2px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '16px', borderBottom: '1px solid rgba(255,255,255,0.05)', color: 'var(--gold)', fontFamily: '"Space Mono", monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '2px' }}>
                 <span>Item</span>
                 <span>Actions</span>
               </div>
@@ -86,11 +92,11 @@ const Cart = () => {
                       Premium Selection
                     </div>
                     <Link to={`/products/${item.product}`} style={{ textDecoration: 'none' }}>
-                      <h3 style={{ fontSize: '28px', color: 'var(--cream)', fontFamily: '"Cormorant Garamond", serif', fontWeight: 300, margin: '0 0 16px 0', lineHeight: 1.1 }}>
+                      <h3 style={{ fontSize: '28px', color: 'var(--gold)', fontFamily: '"Cormorant Garamond", serif', fontWeight: 300, margin: '0 0 16px 0', lineHeight: 1.1 }}>
                         {item.name}
                       </h3>
                     </Link>
-                    <div style={{ fontSize: '18px', color: 'var(--cream)', fontWeight: 300, fontFamily: '"Space Mono", monospace', marginTop: 'auto' }}>
+                    <div style={{ fontSize: '18px', color: 'var(--gold)', fontWeight: 300, fontFamily: '"Space Mono", monospace', marginTop: 'auto' }}>
                       {formatPrice(item.price)}
                     </div>
                   </div>
@@ -101,9 +107,9 @@ const Cart = () => {
                     </button>
                     
                     <div style={{ display: 'flex', alignItems: 'center', border: '1px solid rgba(255,255,255,0.1)', padding: '4px' }}>
-                      <button onClick={() => handleQtyChange(item, -1)} style={{ background: 'transparent', border: 'none', color: 'var(--cream)', cursor: 'none', padding: '8px 12px', fontSize: '16px' }}>-</button>
-                      <span style={{ fontFamily: '"Space Mono", monospace', fontSize: '12px', padding: '0 12px', minWidth: '40px', textAlign: 'center' }}>{item.qty}</span>
-                      <button onClick={() => handleQtyChange(item, 1)} style={{ background: 'transparent', border: 'none', color: 'var(--cream)', cursor: 'none', padding: '8px 12px', fontSize: '16px' }}>+</button>
+                      <button onClick={() => handleQtyChange(item, -1)} style={{ background: 'transparent', border: 'none', color: 'var(--gold)', cursor: 'none', padding: '8px 12px', fontSize: '16px' }}>-</button>
+                      <span style={{ fontFamily: '"Space Mono", monospace', fontSize: '12px', padding: '0 12px', minWidth: '40px', textAlign: 'center', color: 'var(--gold)' }}>{item.qty}</span>
+                      <button onClick={() => handleQtyChange(item, 1)} style={{ background: 'transparent', border: 'none', color: 'var(--gold)', cursor: 'none', padding: '8px 12px', fontSize: '16px' }}>+</button>
                     </div>
                   </div>
                 </div>
@@ -113,26 +119,26 @@ const Cart = () => {
             {/* Right: Order Summary */}
             <div style={{ position: 'sticky', top: '140px', alignSelf: 'start', display: 'flex', flexDirection: 'column' }}>
               <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', padding: '40px', backdropFilter: 'blur(10px)' }}>
-                <h2 style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: '32px', color: 'var(--cream)', fontWeight: 300, margin: '0 0 32px 0', lineHeight: 1 }}>
+                <h2 style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: '32px', color: 'var(--gold)', fontWeight: 300, margin: '0 0 32px 0', lineHeight: 1 }}>
                   Summary
                 </h2>
                 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '32px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: '"Space Mono", monospace', fontSize: '12px', color: 'rgba(255,255,255,0.6)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: '"Space Mono", monospace', fontSize: '12px', color: 'var(--gold)' }}>
                     <span>Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)} items)</span>
-                    <span style={{ color: 'var(--cream)' }}>{formatPrice(cartSubtotal)}</span>
+                    <span>{formatPrice(cartSubtotal)}</span>
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: '"Space Mono", monospace', fontSize: '12px', color: 'rgba(255,255,255,0.6)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: '"Space Mono", monospace', fontSize: '12px', color: 'var(--gold)' }}>
                     <span>Shipping</span>
-                    <span style={{ color: 'var(--gold)' }}>Complimentary</span>
+                    <span>Complimentary</span>
                   </div>
                 </div>
                 
                 <div style={{ height: '1px', background: 'linear-gradient(90deg, rgba(255,255,255,0.1), transparent)', marginBottom: '32px' }} />
                 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '40px' }}>
-                  <span style={{ fontFamily: '"Space Mono", monospace', fontSize: '10px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '2px' }}>Estimated Total</span>
-                  <span style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: '42px', color: 'var(--cream)', lineHeight: 1 }}>{formatPrice(cartSubtotal)}</span>
+                  <span style={{ fontFamily: '"Space Mono", monospace', fontSize: '10px', color: 'var(--gold)', textTransform: 'uppercase', letterSpacing: '2px' }}>Estimated Total</span>
+                  <span style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: '42px', color: 'var(--gold)', lineHeight: 1 }}>{formatPrice(cartSubtotal)}</span>
                 </div>
                 
                 <Button style={{ width: '100%', padding: '20px', fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', justifyContent: 'center' }}>
@@ -148,7 +154,7 @@ const Cart = () => {
           </div>
         )}
       </div>
-      <Footer />
+      
     </div>
   );
 };

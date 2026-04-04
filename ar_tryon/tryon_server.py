@@ -259,7 +259,7 @@ def render_lipstick(img, landmarks, color):
 # Gesture control state
 selection_counter_right = 0
 selection_counter_left = 0
-selection_speed = 10
+selection_speed = 4
 cooldown = 0
 
 def generate_frames():
@@ -293,21 +293,21 @@ def generate_frames():
 
                 if cooldown == 0:
                     # Right Hand (Wrist 16) above Right Shoulder (12)
-                    if wristR[1] < shR[1] - 50:
+                    if wristR[1] < shR[1] - 30:
                         selection_counter_right += 1
-                        if selection_counter_right > selection_speed:
+                        if selection_counter_right >= selection_speed:
                             items_count = len(inventory.get(current_category, [])) if current_category != "beauty" else 2
                             current_item_index = (current_item_index + 1) % (items_count if items_count > 0 else 1)
                             selection_counter_right = 0
-                            cooldown = 15
+                            cooldown = 8
                     # Left Hand (Wrist 15) above Left Shoulder (11)
-                    elif wristL[1] < shL[1] - 50:
+                    elif wristL[1] < shL[1] - 30:
                         selection_counter_left += 1
-                        if selection_counter_left > selection_speed:
+                        if selection_counter_left >= selection_speed:
                             items_count = len(inventory.get(current_category, [])) if current_category != "beauty" else 2
                             current_item_index = (current_item_index - 1) % (items_count if items_count > 0 else 1)
                             selection_counter_left = 0
-                            cooldown = 15
+                            cooldown = 8
                     else:
                         selection_counter_right = 0
                         selection_counter_left = 0
