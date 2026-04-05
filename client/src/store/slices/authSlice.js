@@ -1,4 +1,4 @@
-import API_URL from '../config/api';
+import API_URL from '../../config/api';
 
 // Configure Axios globally for HTTP-Only Cookie tunneling
 axios.defaults.withCredentials = true;
